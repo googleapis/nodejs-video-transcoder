@@ -3,23 +3,16 @@
     {
       "git": {
         "name": ".",
-        "remote": "https://github.com/googleapis/nodejs-video-transcoder.git",
-        "sha": "52c22407be70fdc23626891f0502d457bbf68158"
+        "remote": "git@github.com:googleapis/nodejs-video-transcoder.git",
+        "sha": "15664e64d9a907ef23b4bb888101d9b76fc9c01d"
       }
     },
     {
       "git": {
         "name": "googleapis",
         "remote": "https://github.com/googleapis/googleapis.git",
-        "sha": "f446e123bc04ee0ee0edfa112f4998182638322b",
-        "internalRef": "334248254"
-      }
-    },
-    {
-      "git": {
-        "name": "synthtool",
-        "remote": "https://github.com/googleapis/synthtool.git",
-        "sha": "da29da32b3a988457b49ae290112b74f14b713cc"
+        "sha": "00bbad4dfd6633cf4b5f9596c1f93b756bb5c776",
+        "internalRef": "339708980"
       }
     }
   ],
@@ -27,7 +20,7 @@
     {
       "client": {
         "source": "googleapis",
-        "apiName": "policytroubleshooter",
+        "apiName": "transcoder",
         "apiVersion": "v1beta1",
         "language": "nodejs",
         "generator": "bazel"
@@ -75,18 +68,18 @@
     ".kokoro/test.bat",
     ".kokoro/test.sh",
     ".kokoro/trampoline.sh",
+    ".kokoro/trampoline_v2.sh",
     ".mocharc.js",
     ".nycrc",
     ".prettierignore",
     ".prettierrc.js",
+    ".trampolinerc",
     "CODE_OF_CONDUCT.md",
     "CONTRIBUTING.md",
     "LICENSE",
     "README.md",
     "api-extractor.json",
     "linkinator.config.json",
-    "package-lock.json.3428854303",
-    "package.json",
     "protos/google/cloud/video/transcoder/v1beta1/resources.proto",
     "protos/google/cloud/video/transcoder/v1beta1/services.proto",
     "protos/protos.d.ts",

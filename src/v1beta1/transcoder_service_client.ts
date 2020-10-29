@@ -654,8 +654,8 @@ export class TranscoderServiceClient {
    *   Required. The ID to use for the job template, which will become the final component
    *   of the job template's resource name.
    *
-   *   This value should be 4-63 characters, and valid characters
-   *   are `/[a-zA-Z0-9_-_]/`.
+   *   This value should be 4-63 characters, and valid characters must match the
+   *   regular expression `{@link a-zA-Z0-9_-|a-zA-Z}*`.
    * @param {object} [options]
    *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
    * @returns {Promise} - The promise which resolves to an array.

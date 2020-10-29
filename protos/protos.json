@@ -98,6 +98,27 @@
                               "options": {
                                 "(google.api.field_behavior)": "OUTPUT_ONLY"
                               }
+                            },
+                            "createTime": {
+                              "type": "google.protobuf.Timestamp",
+                              "id": 12,
+                              "options": {
+                                "(google.api.field_behavior)": "OUTPUT_ONLY"
+                              }
+                            },
+                            "startTime": {
+                              "type": "google.protobuf.Timestamp",
+                              "id": 13,
+                              "options": {
+                                "(google.api.field_behavior)": "OUTPUT_ONLY"
+                              }
+                            },
+                            "endTime": {
+                              "type": "google.protobuf.Timestamp",
+                              "id": 14,
+                              "options": {
+                                "(google.api.field_behavior)": "OUTPUT_ONLY"
+                              }
                             }
                           },
                           "nested": {
@@ -631,17 +652,11 @@
                             },
                             "heightPixels": {
                               "type": "int32",
-                              "id": 5,
-                              "options": {
-                                "(google.api.field_behavior)": "REQUIRED"
-                              }
+                              "id": 5
                             },
                             "widthPixels": {
                               "type": "int32",
-                              "id": 6,
-                              "options": {
-                                "(google.api.field_behavior)": "REQUIRED"
-                              }
+                              "id": 6
                             },
                             "pixelFormat": {
                               "type": "string",
@@ -2320,6 +2335,18 @@
               }
             },
             "Duration": {
+              "fields": {
+                "seconds": {
+                  "type": "int64",
+                  "id": 1
+                },
+                "nanos": {
+                  "type": "int32",
+                  "id": 2
+                }
+              }
+            },
+            "Timestamp": {
               "fields": {
                 "seconds": {
                   "type": "int64",
