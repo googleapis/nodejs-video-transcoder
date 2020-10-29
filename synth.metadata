@@ -4,7 +4,7 @@
       "git": {
         "name": ".",
         "remote": "git@github.com:googleapis/nodejs-video-transcoder.git",
-        "sha": "15664e64d9a907ef23b4bb888101d9b76fc9c01d"
+        "sha": "1dc9fc0190f66324421204f388e155c5f62b821d"
       }
     },
     {
@@ -86,6 +86,7 @@
     "protos/protos.js",
     "protos/protos.json",
     "renovate.json",
+    "samples/README.md",
     "src/index.ts",
     "src/v1beta1/index.ts",
     "src/v1beta1/transcoder_service_client.ts",
