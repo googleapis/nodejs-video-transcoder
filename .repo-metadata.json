@@ -1,6 +1,6 @@
 {
   "name": "transcoder",
-  "name_pretty": "",
+  "name_pretty": "Transcoder API",
   "product_documentation": "https://googleapis.dev/nodejs/transcoder/latest",
   "client_documentation": "https://googleapis.dev/nodejs/transcoder/latest",
   "issue_tracker": "https://github.com/googleapis/nodejs-video-transcoder/issues",
