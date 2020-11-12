@@ -43,10 +43,6 @@ before(async () => {
     process.env.GOOGLE_CLOUD_PROJECT_NUMBER,
     'Must set GOOGLE_CLOUD_PROJECT_NUMBER environment variable!'
   );
-  assert(
-    process.env.GOOGLE_APPLICATION_CREDENTIALS,
-    'Must set GOOGLE_APPLICATION_CREDENTIALS environment variable!'
-  );
   // Create a Cloud Storage bucket to be used for testing.
   async function deleteFiles() {
     const [files] = await storage.bucket(bucketName).getFiles();
