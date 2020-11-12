@@ -19,8 +19,8 @@ set -eo pipefail
 export NPM_CONFIG_PREFIX=${HOME}/.npm-global
 
 # Setup service account credentials.
-export GOOGLE_APPLICATION_CREDENTIALS=${KOKORO_GFILE_DIR}/service-account.json
-export GCLOUD_PROJECT=long-door-651
+export GOOGLE_APPLICATION_CREDENTIALS=/Users/nickcook/Downloads/transcoder/transcoder-test-288317-e058a2a66a3d.json
+export GCLOUD_PROJECT=transcoder-test-288317
 
 cd $(dirname $0)/..
 

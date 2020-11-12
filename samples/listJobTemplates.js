@@ -15,7 +15,7 @@
 
 'use strict';
 
-function main(projectId = process.env.GOOGLE_CLOUD_PROJECT, location) {
+function main(projectId, location) {
   // [START transcoder_list_job_templates]
   /**
    * TODO(developer): Uncomment these variables before running the sample.
@@ -44,4 +44,8 @@ function main(projectId = process.env.GOOGLE_CLOUD_PROJECT, location) {
 }
 
 // node listJobTemplates.js <projectId> <location>
+process.on('unhandledRejection', err => {
+  console.error(err.message);
+  process.exitCode = 1;
+});
 main(...process.argv.slice(2));

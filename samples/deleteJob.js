@@ -15,7 +15,7 @@
 
 'use strict';
 
-function main(projectId = process.env.GOOGLE_CLOUD_PROJECT, location, jobId) {
+function main(projectId, location, jobId) {
   // [START transcoder_delete_job]
   /**
    * TODO(developer): Uncomment these variables before running the sample.
@@ -35,7 +35,7 @@ function main(projectId = process.env.GOOGLE_CLOUD_PROJECT, location, jobId) {
     const request = {
       name: transcoderServiceClient.jobPath(projectId, location, jobId),
     };
-    const [response] = await transcoderServiceClient.deleteJob(request);
+    await transcoderServiceClient.deleteJob(request);
     console.log('Deleted job');
   }
 
@@ -44,4 +44,8 @@ function main(projectId = process.env.GOOGLE_CLOUD_PROJECT, location, jobId) {
 }
 
 // node deleteJob.js <projectId> <location> <jobId>
+process.on('unhandledRejection', err => {
+  console.error(err.message);
+  process.exitCode = 1;
+});
 main(...process.argv.slice(2));
