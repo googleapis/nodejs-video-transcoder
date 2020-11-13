@@ -18,6 +18,7 @@
 const path = require('path');
 const assert = require('assert');
 const {execSync} = require('child_process');
+const {describe, it} = require('mocha');
 
 const {Storage} = require('@google-cloud/storage');
 const bucketName = 'nodejs-samples-transcoder-test';
