@@ -17,7 +17,7 @@
 
 const path = require('path');
 const assert = require('assert');
-const uuid = require('uuid');
+const {v4: uuidv4} = require('uuid');
 const {execSync} = require('child_process');
 const {describe, it, before, after} = require('mocha');
 
