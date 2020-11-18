@@ -51,8 +51,8 @@ before(async () => {
       await storage.bucket(bucketName).file(file.name).delete();
     }
   }
-  await deleteFiles();
-  await storage.bucket(bucketName).delete();
+  // await deleteFiles();
+  // await storage.bucket(bucketName).delete();
   await storage.createBucket(bucketName);
   await storage.bucket(bucketName).upload(resourceFile);
   this.projectId = await storage.getProjectId();
