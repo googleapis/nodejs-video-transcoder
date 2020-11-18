@@ -62,7 +62,9 @@ after(async () => {
   try {
     await deleteFiles();
     await storage.bucket(bucketName).delete();
-  } catch (err) {} // Ignore error
+  } catch (err) {
+      console.log("Cannot delete bucket");
+  }
 });
 
 describe('Job template functions', () => {
