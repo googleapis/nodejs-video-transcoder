@@ -27,6 +27,7 @@ const bucketName = `nodejs-samples-transcoder-test-${uniqueID}`;
 const storage = new Storage();
 
 const projectNumber = process.env.GOOGLE_CLOUD_PROJECT_NUMBER;
+const projectId = process.env.GCLOUD_PROJECT;
 const location = 'us-central1';
 const templateId = 'my-nodejs-test-template';
 const preset = 'preset/web-hd';
