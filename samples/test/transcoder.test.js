@@ -58,20 +58,19 @@ before(async () => {
   // await storage.bucket(bucketName).delete();
   await storage.createBucket(bucketName);
   await storage.bucket(bucketName).upload(resourceFile);
-  this.projectId = await storage.getProjectId();
 });
 
 describe('Job template functions', () => {
   before(() => {
     // Delete the job template if it already exists
     execSync(
-      `node deleteJobTemplate.js ${this.projectId} ${location} ${templateId}`,
+      `node deleteJobTemplate.js ${projectId} ${location} ${templateId}`,
       {
         cwd,
       }
     );
     const output = execSync(
-      `node createJobTemplate.js ${this.projectId} ${location} ${templateId}`,
+      `node createJobTemplate.js ${projectId} ${location} ${templateId}`,
       {cwd}
     );
     assert.ok(output.includes(templateName));
@@ -79,7 +78,7 @@ describe('Job template functions', () => {
 
   after(() => {
     const output = execSync(
-      `node deleteJobTemplate.js ${this.projectId} ${location} ${templateId}`,
+      `node deleteJobTemplate.js ${projectId} ${location} ${templateId}`,
       {cwd}
     );
     assert.ok(output.includes('Deleted job template'));
@@ -87,7 +86,7 @@ describe('Job template functions', () => {
 
   it('should get a job template', () => {
     const output = execSync(
-      `node getJobTemplate.js ${this.projectId} ${location} ${templateId}`,
+      `node getJobTemplate.js ${projectId} ${location} ${templateId}`,
       {cwd}
     );
     assert.ok(output.includes(templateName));
@@ -95,7 +94,7 @@ describe('Job template functions', () => {
 
   it('should show a list of job templates', () => {
     const output = execSync(
-      `node listJobTemplates.js ${this.projectId} ${location}`,
+      `node listJobTemplates.js ${projectId} ${location}`,
       {
         cwd,
       }
@@ -107,7 +106,7 @@ describe('Job template functions', () => {
 describe('Job functions preset', () => {
   before(function () {
     const output = execSync(
-      `node createJobFromPreset.js ${this.projectId} ${location} ${inputUri} ${outputUriForPreset} ${preset}`,
+      `node createJobFromPreset.js ${projectId} ${location} ${inputUri} ${outputUriForPreset} ${preset}`,
       {cwd}
     );
     assert.ok(
@@ -118,7 +117,7 @@ describe('Job functions preset', () => {
 
   after(function () {
     const output = execSync(
-      `node deleteJob.js ${this.projectId} ${location} ${this.presetJobId}`,
+      `node deleteJob.js ${projectId} ${location} ${this.presetJobId}`,
       {cwd}
     );
     assert.ok(output.includes('Deleted job'));
@@ -126,7 +125,7 @@ describe('Job functions preset', () => {
 
   it('should get a job', function () {
     const output = execSync(
-      `node getJob.js ${this.projectId} ${location} ${this.presetJobId}`,
+      `node getJob.js ${projectId} ${location} ${this.presetJobId}`,
       {cwd}
     );
     const jobName = `projects/${projectNumber}/locations/${location}/jobs/${this.presetJobId}`;
@@ -134,7 +133,7 @@ describe('Job functions preset', () => {
   });
 
   it('should show a list of jobs', function () {
-    const output = execSync(`node listJobs.js ${this.projectId} ${location}`, {
+    const output = execSync(`node listJobs.js ${projectId} ${location}`, {
       cwd,
     });
     const jobName = `projects/${projectNumber}/locations/${location}/jobs/${this.presetJobId}`;
@@ -147,7 +146,7 @@ describe('Job functions preset', () => {
 
   it('should check that the job succeeded', function () {
     const output = execSync(
-      `node getJobState.js ${this.projectId} ${location} ${this.presetJobId}`,
+      `node getJobState.js ${projectId} ${location} ${this.presetJobId}`,
       {cwd}
     );
     assert.ok(output.includes('Job state: SUCCEEDED'));
@@ -157,12 +156,12 @@ describe('Job functions preset', () => {
 describe('Job functions template', () => {
   before(function () {
     let output = execSync(
-      `node createJobTemplate.js ${this.projectId} ${location} ${templateId}`,
+      `node createJobTemplate.js ${projectId} ${location} ${templateId}`,
       {cwd}
     );
     assert.ok(output.includes(templateName));
     output = execSync(
-      `node createJobFromTemplate.js ${this.projectId} ${location} ${inputUri} ${outputUriForTemplate} ${templateId}`,
+      `node createJobFromTemplate.js ${projectId} ${location} ${inputUri} ${outputUriForTemplate} ${templateId}`,
       {cwd}
     );
     assert.ok(
@@ -173,12 +172,12 @@ describe('Job functions template', () => {
 
   after(function () {
     let output = execSync(
-      `node deleteJob.js ${this.projectId} ${location} ${this.templateJobId}`,
+      `node deleteJob.js ${projectId} ${location} ${this.templateJobId}`,
       {cwd}
     );
     assert.ok(output.includes('Deleted job'));
     output = execSync(
-      `node deleteJobTemplate.js ${this.projectId} ${location} ${templateId}`,
+      `node deleteJobTemplate.js ${projectId} ${location} ${templateId}`,
       {cwd}
     );
     assert.ok(output.includes('Deleted job template'));
@@ -186,7 +185,7 @@ describe('Job functions template', () => {
 
   it('should get a job', function () {
     const output = execSync(
-      `node getJob.js ${this.projectId} ${location} ${this.templateJobId}`,
+      `node getJob.js ${projectId} ${location} ${this.templateJobId}`,
       {cwd}
     );
     const jobName = `projects/${projectNumber}/locations/${location}/jobs/${this.templateJobId}`;
@@ -194,7 +193,7 @@ describe('Job functions template', () => {
   });
 
   it('should show a list of jobs', function () {
-    const output = execSync(`node listJobs.js ${this.projectId} ${location}`, {
+    const output = execSync(`node listJobs.js ${projectId} ${location}`, {
       cwd,
     });
     const jobName = `projects/${projectNumber}/locations/${location}/jobs/${this.templateJobId}`;
@@ -207,7 +206,7 @@ describe('Job functions template', () => {
 
   it('should check that the job succeeded', function () {
     const output = execSync(
-      `node getJobState.js ${this.projectId} ${location} ${this.templateJobId}`,
+      `node getJobState.js ${projectId} ${location} ${this.templateJobId}`,
       {cwd}
     );
     assert.ok(output.includes('Job state: SUCCEEDED'));
@@ -217,7 +216,7 @@ describe('Job functions template', () => {
 describe('Job functions adhoc', () => {
   before(function () {
     const output = execSync(
-      `node createJobFromAdHoc.js ${this.projectId} ${location} ${inputUri} ${outputUriForAdHoc}`,
+      `node createJobFromAdHoc.js ${projectId} ${location} ${inputUri} ${outputUriForAdHoc}`,
       {cwd}
     );
     assert.ok(
@@ -228,7 +227,7 @@ describe('Job functions adhoc', () => {
 
   after(function () {
     const output = execSync(
-      `node deleteJob.js ${this.projectId} ${location} ${this.adhocJobId}`,
+      `node deleteJob.js ${projectId} ${location} ${this.adhocJobId}`,
       {cwd}
     );
     assert.ok(output.includes('Deleted job'));
@@ -236,7 +235,7 @@ describe('Job functions adhoc', () => {
 
   it('should get a job', function () {
     const output = execSync(
-      `node getJob.js ${this.projectId} ${location} ${this.adhocJobId}`,
+      `node getJob.js ${projectId} ${location} ${this.adhocJobId}`,
       {cwd}
     );
     const jobName = `projects/${projectNumber}/locations/${location}/jobs/${this.adhocJobId}`;
@@ -244,7 +243,7 @@ describe('Job functions adhoc', () => {
   });
 
   it('should show a list of jobs', function () {
-    const output = execSync(`node listJobs.js ${this.projectId} ${location}`, {
+    const output = execSync(`node listJobs.js ${projectId} ${location}`, {
       cwd,
     });
     const jobName = `projects/${projectNumber}/locations/${location}/jobs/${this.adhocJobId}`;
@@ -257,7 +256,7 @@ describe('Job functions adhoc', () => {
 
   it('should check that the job succeeded', function () {
     const output = execSync(
-      `node getJobState.js ${this.projectId} ${location} ${this.adhocJobId}`,
+      `node getJobState.js ${projectId} ${location} ${this.adhocJobId}`,
       {cwd}
     );
     assert.ok(output.includes('Job state: SUCCEEDED'));
