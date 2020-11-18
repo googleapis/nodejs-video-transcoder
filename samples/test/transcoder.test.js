@@ -17,11 +17,13 @@
 
 const path = require('path');
 const assert = require('assert');
+const uuid = require('uuid');
 const {execSync} = require('child_process');
 const {describe, it, before, after} = require('mocha');
 
 const {Storage} = require('@google-cloud/storage');
-const bucketName = 'nodejs-samples-transcoder-test';
+const uniqueID = uuidv4().split('-')[0];
+const bucketName = `nodejs-samples-transcoder-test-${uniqueID}`;
 const storage = new Storage();
 
 const projectNumber = process.env.GOOGLE_CLOUD_PROJECT_NUMBER;
