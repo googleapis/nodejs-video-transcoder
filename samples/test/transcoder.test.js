@@ -29,7 +29,7 @@ const storage = new Storage();
 const projectNumber = process.env.GOOGLE_CLOUD_PROJECT_NUMBER;
 const projectId = process.env.GCLOUD_PROJECT;
 const location = 'us-central1';
-const templateId = 'my-nodejs-test-template';
+const templateId = `nodejs-test-transcoder-template-${uniqueID}`;
 const preset = 'preset/web-hd';
 const templateName = `projects/${projectNumber}/locations/${location}/jobTemplates/${templateId}`;
 
@@ -48,16 +48,21 @@ before(async () => {
     'Must set GOOGLE_CLOUD_PROJECT_NUMBER environment variable!'
   );
   // Create a Cloud Storage bucket to be used for testing.
+  await storage.createBucket(bucketName);
+  await storage.bucket(bucketName).upload(resourceFile);
+});
+
+after(async () => {
   async function deleteFiles() {
     const [files] = await storage.bucket(bucketName).getFiles();
     for (const file of files) {
       await storage.bucket(bucketName).file(file.name).delete();
     }
   }
-  // await deleteFiles();
-  // await storage.bucket(bucketName).delete();
-  await storage.createBucket(bucketName);
-  await storage.bucket(bucketName).upload(resourceFile);
+  try {
+    await deleteFiles();
+    await storage.bucket(bucketName).delete();
+  } catch (err) {} // Ignore error
 });
 
 describe('Job template functions', () => {
