@@ -63,7 +63,7 @@ after(async () => {
     await deleteFiles();
     await storage.bucket(bucketName).delete();
   } catch (err) {
-      console.log('Cannot delete bucket');
+    console.log('Cannot delete bucket');
   }
 });
 
