@@ -3,8 +3,16 @@
     {
       "git": {
         "name": ".",
-        "remote": "git@github.com:googleapis/nodejs-video-transcoder.git",
-        "sha": "ceb82ad669a4ac0dfabbf0bbbaff847c31ad4029"
+        "remote": "https://github.com/googleapis/nodejs-video-transcoder.git",
+        "sha": "7bf59c3c9defa1675d07083578b3d3acc9f3fca8"
+      }
+    },
+    {
+      "git": {
+        "name": "googleapis",
+        "remote": "https://github.com/googleapis/googleapis.git",
+        "sha": "2f019bf70bfe06f1e2af1b04011b0a2405190e43",
+        "internalRef": "343202295"
       }
     },
     {
@@ -79,7 +87,6 @@
     "README.md",
     "api-extractor.json",
     "linkinator.config.json",
-    "package-lock.json.3601604791",
     "protos/google/cloud/video/transcoder/v1beta1/resources.proto",
     "protos/google/cloud/video/transcoder/v1beta1/services.proto",
     "protos/protos.d.ts",
@@ -87,7 +94,6 @@
     "protos/protos.json",
     "renovate.json",
     "samples/README.md",
-    "samples/package-lock.json.2940811242",
     "src/index.ts",
     "src/v1beta1/index.ts",
     "src/v1beta1/transcoder_service_client.ts",
