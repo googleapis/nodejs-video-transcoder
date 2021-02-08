@@ -156,6 +156,7 @@ describe('Job functions preset', () => {
       `node getJobState.js ${projectId} ${location} ${this.presetJobId}`,
       {cwd}
     );
+    console.info(output);
     assert.ok(output.includes('Job state: SUCCEEDED'));
   });
 });
