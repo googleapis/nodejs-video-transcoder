@@ -265,15 +265,15 @@ describe('Job functions adhoc', () => {
     assert.ok(output.includes(jobName));
   });
 
-  it('should pause for job to run', done => {
-    setTimeout(done, 60000);
-  });
-
-  it('should check that the job succeeded', function () {
+  it('should check that the job succeeded', async function () {
+    this.retries(5);
+    await wait(30000);
     const output = execSync(
       `node getJobState.js ${projectId} ${location} ${this.adhocJobId}`,
       {cwd}
     );
+    // TODO(bcoe): remove this debug information once passing:
+    console.info(output.toString('utf8'));
     assert.ok(output.includes('Job state: SUCCEEDED'));
   });
 });
