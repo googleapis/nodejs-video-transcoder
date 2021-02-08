@@ -156,7 +156,7 @@ describe('Job functions preset', () => {
   });
 
   it('should check that the job succeeded', async function () {
-    this.retry(5);
+    this.retries(5);
     await wait(30000);
     const output = execSync(
       `node getJobState.js ${projectId} ${location} ${this.presetJobId}`,
@@ -216,7 +216,7 @@ describe('Job functions template', () => {
   });
 
   it('should check that the job succeeded', async function () {
-    this.retry(5);
+    this.retries(5);
     await wait(30000);
     const output = execSync(
       `node getJobState.js ${projectId} ${location} ${this.templateJobId}`,
