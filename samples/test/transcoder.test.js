@@ -163,7 +163,7 @@ describe('Job functions preset', () => {
       {cwd}
     );
     // TODO(bcoe): remove this debug information once passing:
-    console.info(output);
+    console.info(output.toString('utf8'));
     assert.ok(output.includes('Job state: SUCCEEDED'));
   });
 });
@@ -223,7 +223,7 @@ describe('Job functions template', () => {
       {cwd}
     );
     // TODO(bcoe): remove this debug information once passing:
-    console.info(output);
+    console.info(output.toString('utf8'));
     assert.ok(output.includes('Job state: SUCCEEDED'));
   });
 });
