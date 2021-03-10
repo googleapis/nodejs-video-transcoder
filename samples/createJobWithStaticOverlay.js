@@ -16,7 +16,7 @@
 'use strict';
 
 function main(projectId, location, inputUri, overlayImageUri, outputUri) {
-  // [START transcoder_create_job_from_static_overlay]
+  // [START transcoder_create_job_with_static_overlay]
   /**
    * TODO(developer): Uncomment these variables before running the sample.
    */
@@ -108,7 +108,7 @@ function main(projectId, location, inputUri, overlayImageUri, outputUri) {
   }
 
   createJobFromStaticOverlay();
-  // [END transcoder_create_job_from_static_overlay]
+  // [END transcoder_create_job_with_static_overlay]
 }
 
 // node createJobFromStaticOverlay.js <projectId> <location> <inputUri> <overlayImageUri> <outputUri>
