@@ -39,7 +39,6 @@
     "test": "c8 mocha build/test"
   },
   "dependencies": {
-    "express": "^4.17.1",
     "google-gax": "^2.9.2"
   },
   "devDependencies": {
