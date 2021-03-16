@@ -9,5 +9,6 @@
   "repo": "googleapis/nodejs-video-transcoder",
   "distribution_name": "@google-cloud/video-transcoder",
   "api_id": "transcoder.googleapis.com",
-  "requires_billing": true
+  "requires_billing": true,
+  "default_version": "v1beta1"
 }
