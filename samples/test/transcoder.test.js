@@ -49,6 +49,8 @@ const outputUriForSetNumberImagesSpritesheet = `gs://${bucketName}/${outputDirFo
 const outputDirForPeriodicImagesSpritesheet =
   'test-output-periodic-spritesheet/';
 const outputUriForPeriodicImagesSpritesheet = `gs://${bucketName}/${outputDirForPeriodicImagesSpritesheet}`;
+// Spritesheets are generated from the input video into the bucket directories above.
+// Spritesheets use the following file naming conventions:
 const smallSpriteSheetFileName = 'small-sprite-sheet0000000000.jpeg';
 const largeSpriteSheetFileName = 'large-sprite-sheet0000000000.jpeg';
 
