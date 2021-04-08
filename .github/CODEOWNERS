@@ -6,8 +6,4 @@
 
 
 # The yoshi-nodejs team is the default owner for nodejs repositories.
-*     @googleapis/yoshi-nodejs 
-
-# @Irataxy will own samples
-samples/ @irataxy
-
+*     @googleapis/yoshi-nodejs
