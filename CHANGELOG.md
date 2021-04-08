@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.4.0](https://www.github.com/googleapis/nodejs-video-transcoder/compare/v1.3.0...v1.4.0) (2021-03-31)
+
+
+### Features
+
+* add spritesheet samples and tests. Remove unneeded list jobs ca… ([#43](https://www.github.com/googleapis/nodejs-video-transcoder/issues/43)) ([7508d64](https://www.github.com/googleapis/nodejs-video-transcoder/commit/7508d646c099ef278a402b5a7ad76c3ce926e25f))
+
+## [1.3.0](https://www.github.com/googleapis/nodejs-video-transcoder/compare/v1.2.0...v1.3.0) (2021-03-15)
+
+
+### Features
+
+* **samples:** add code samples and tests for overlay creation ([#39](https://www.github.com/googleapis/nodejs-video-transcoder/issues/39)) ([47686fa](https://www.github.com/googleapis/nodejs-video-transcoder/commit/47686fa17c5e5164f6d5f5f37f09d37bd9844cc3))
+
 ## [1.2.0](https://www.github.com/googleapis/nodejs-video-transcoder/compare/v1.1.0...v1.2.0) (2021-01-09)
 
 
