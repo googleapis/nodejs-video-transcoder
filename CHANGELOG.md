@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.4.1](https://www.github.com/googleapis/nodejs-video-transcoder/compare/v1.4.0...v1.4.1) (2021-05-07)
+
+
+### Bug Fixes
+
+* **deps:** require google-gax v2.12.0 ([#58](https://www.github.com/googleapis/nodejs-video-transcoder/issues/58)) ([50f8132](https://www.github.com/googleapis/nodejs-video-transcoder/commit/50f813209878f5c2472bd1b38640341ae5715d33))
+
 ## [1.4.0](https://www.github.com/googleapis/nodejs-video-transcoder/compare/v1.3.0...v1.4.0) (2021-03-31)
 
 
