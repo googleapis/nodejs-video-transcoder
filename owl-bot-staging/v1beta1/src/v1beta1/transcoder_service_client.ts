@@ -18,10 +18,17 @@
 
 /* global window */
 import * as gax from 'google-gax';
-import {Callback, CallOptions, Descriptors, ClientOptions, PaginationCallback, GaxCall} from 'google-gax';
+import {
+  Callback,
+  CallOptions,
+  Descriptors,
+  ClientOptions,
+  PaginationCallback,
+  GaxCall,
+} from 'google-gax';
 
-import { Transform } from 'stream';
-import { RequestType } from 'google-gax/build/src/apitypes';
+import {Transform} from 'stream';
+import {RequestType} from 'google-gax/build/src/apitypes';
 import * as protos from '../../protos/protos';
 import jsonProtos = require('../../protos/protos.json');
 /**
@@ -98,10 +105,13 @@ export class TranscoderServiceClient {
   constructor(opts?: ClientOptions) {
     // Ensure that options include all the required fields.
     const staticMembers = this.constructor as typeof TranscoderServiceClient;
-    const servicePath = opts?.servicePath || opts?.apiEndpoint || staticMembers.servicePath;
+    const servicePath =
+      opts?.servicePath || opts?.apiEndpoint || staticMembers.servicePath;
     const port = opts?.port || staticMembers.port;
     const clientConfig = opts?.clientConfig ?? {};
-    const fallback = opts?.fallback ?? (typeof window !== 'undefined' && typeof window?.fetch === 'function');
+    const fallback =
+      opts?.fallback ??
+      (typeof window !== 'undefined' && typeof window?.fetch === 'function');
     opts = Object.assign({servicePath, port, clientConfig, fallback}, opts);
 
     // If scopes are unset in options and we're connecting to a non-default endpoint, set scopes just in case.
@@ -119,7 +129,7 @@ export class TranscoderServiceClient {
     this._opts = opts;
 
     // Save the auth object to the client, for use by other methods.
-    this.auth = (this._gaxGrpc.auth as gax.GoogleAuth);
+    this.auth = this._gaxGrpc.auth as gax.GoogleAuth;
 
     // Set the default scopes in auth client if needed.
     if (servicePath === staticMembers.servicePath) {
@@ -127,10 +137,7 @@ export class TranscoderServiceClient {
     }
 
     // Determine the client header string.
-    const clientHeader = [
-      `gax/${this._gaxModule.version}`,
-      `gapic/${version}`,
-    ];
+    const clientHeader = [`gax/${this._gaxModule.version}`, `gapic/${version}`];
     if (typeof process !== 'undefined' && 'versions' in process) {
       clientHeader.push(`gl-node/${process.versions.node}`);
     } else {
@@ -138,7 +145,7 @@ export class TranscoderServiceClient {
     }
     if (!opts.fallback) {
       clientHeader.push(`grpc/${this._gaxGrpc.grpcVersion}`);
-    } else if (opts.fallback === 'rest' ) {
+    } else if (opts.fallback === 'rest') {
       clientHeader.push(`rest/${this._gaxGrpc.grpcVersion}`);
     }
     if (opts.libName && opts.libVersion) {
@@ -166,16 +173,25 @@ export class TranscoderServiceClient {
     // (e.g. 50 results at a time, with tokens to get subsequent
     // pages). Denote the keys used for pagination and results.
     this.descriptors.page = {
-      listJobs:
-          new this._gaxModule.PageDescriptor('pageToken', 'nextPageToken', 'jobs'),
-      listJobTemplates:
-          new this._gaxModule.PageDescriptor('pageToken', 'nextPageToken', 'jobTemplates')
+      listJobs: new this._gaxModule.PageDescriptor(
+        'pageToken',
+        'nextPageToken',
+        'jobs'
+      ),
+      listJobTemplates: new this._gaxModule.PageDescriptor(
+        'pageToken',
+        'nextPageToken',
+        'jobTemplates'
+      ),
     };
 
     // Put together the default options sent with requests.
     this._defaults = this._gaxGrpc.constructSettings(
-        'google.cloud.video.transcoder.v1beta1.TranscoderService', gapicConfig as gax.ClientConfig,
-        opts.clientConfig || {}, {'x-goog-api-client': clientHeader.join(' ')});
+      'google.cloud.video.transcoder.v1beta1.TranscoderService',
+      gapicConfig as gax.ClientConfig,
+      opts.clientConfig || {},
+      {'x-goog-api-client': clientHeader.join(' ')}
+    );
 
     // Set up a dictionary of "inner API calls"; the core implementation
     // of calling the API is handled in `google-gax`, with this code
@@ -203,16 +219,28 @@ export class TranscoderServiceClient {
     // Put together the "service stub" for
     // google.cloud.video.transcoder.v1beta1.TranscoderService.
     this.transcoderServiceStub = this._gaxGrpc.createStub(
-        this._opts.fallback ?
-          (this._protos as protobuf.Root).lookupService('google.cloud.video.transcoder.v1beta1.TranscoderService') :
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          (this._protos as any).google.cloud.video.transcoder.v1beta1.TranscoderService,
-        this._opts) as Promise<{[method: string]: Function}>;
+      this._opts.fallback
+        ? (this._protos as protobuf.Root).lookupService(
+            'google.cloud.video.transcoder.v1beta1.TranscoderService'
+          )
+        : // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (this._protos as any).google.cloud.video.transcoder.v1beta1
+            .TranscoderService,
+      this._opts
+    ) as Promise<{[method: string]: Function}>;
 
     // Iterate over each of the methods that the service provides
     // and create an API call method for each.
-    const transcoderServiceStubMethods =
-        ['createJob', 'listJobs', 'getJob', 'deleteJob', 'createJobTemplate', 'listJobTemplates', 'getJobTemplate', 'deleteJobTemplate'];
+    const transcoderServiceStubMethods = [
+      'createJob',
+      'listJobs',
+      'getJob',
+      'deleteJob',
+      'createJobTemplate',
+      'listJobTemplates',
+      'getJobTemplate',
+      'deleteJobTemplate',
+    ];
     for (const methodName of transcoderServiceStubMethods) {
       const callPromise = this.transcoderServiceStub.then(
         stub => (...args: Array<{}>) => {
@@ -222,13 +250,12 @@ export class TranscoderServiceClient {
           const func = stub[methodName];
           return func.apply(stub, args);
         },
-        (err: Error|null|undefined) => () => {
+        (err: Error | null | undefined) => () => {
           throw err;
-        });
+        }
+      );
 
-      const descriptor =
-        this.descriptors.page[methodName] ||
-        undefined;
+      const descriptor = this.descriptors.page[methodName] || undefined;
       const apiCall = this._gaxModule.createApiCall(
         callPromise,
         this._defaults[methodName],
@@ -272,9 +299,7 @@ export class TranscoderServiceClient {
    * @returns {string[]} List of default scopes.
    */
   static get scopes() {
-    return [
-      'https://www.googleapis.com/auth/cloud-platform'
-    ];
+    return ['https://www.googleapis.com/auth/cloud-platform'];
   }
 
   getProjectId(): Promise<string>;
@@ -283,8 +308,9 @@ export class TranscoderServiceClient {
    * Return the project ID used by this class.
    * @returns {Promise} A promise that resolves to string containing the project ID.
    */
-  getProjectId(callback?: Callback<string, undefined, undefined>):
-      Promise<string>|void {
+  getProjectId(
+    callback?: Callback<string, undefined, undefined>
+  ): Promise<string> | void {
     if (callback) {
       this.auth.getProjectId(callback);
       return;
@@ -296,66 +322,93 @@ export class TranscoderServiceClient {
   // -- Service calls --
   // -------------------
   createJob(
-      request: protos.google.cloud.video.transcoder.v1beta1.ICreateJobRequest,
-      options?: CallOptions):
-      Promise<[
-        protos.google.cloud.video.transcoder.v1beta1.IJob,
-        protos.google.cloud.video.transcoder.v1beta1.ICreateJobRequest|undefined, {}|undefined
-      ]>;
+    request: protos.google.cloud.video.transcoder.v1beta1.ICreateJobRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.cloud.video.transcoder.v1beta1.IJob,
+      (
+        | protos.google.cloud.video.transcoder.v1beta1.ICreateJobRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  >;
   createJob(
-      request: protos.google.cloud.video.transcoder.v1beta1.ICreateJobRequest,
-      options: CallOptions,
-      callback: Callback<
-          protos.google.cloud.video.transcoder.v1beta1.IJob,
-          protos.google.cloud.video.transcoder.v1beta1.ICreateJobRequest|null|undefined,
-          {}|null|undefined>): void;
+    request: protos.google.cloud.video.transcoder.v1beta1.ICreateJobRequest,
+    options: CallOptions,
+    callback: Callback<
+      protos.google.cloud.video.transcoder.v1beta1.IJob,
+      | protos.google.cloud.video.transcoder.v1beta1.ICreateJobRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
   createJob(
-      request: protos.google.cloud.video.transcoder.v1beta1.ICreateJobRequest,
-      callback: Callback<
-          protos.google.cloud.video.transcoder.v1beta1.IJob,
-          protos.google.cloud.video.transcoder.v1beta1.ICreateJobRequest|null|undefined,
-          {}|null|undefined>): void;
-/**
- * Creates a job in the specified region.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. The parent location to create and process this job.
- *   Format: `projects/{project}/locations/{location}`
- * @param {google.cloud.video.transcoder.v1beta1.Job} request.job
- *   Required. Parameters for creating transcoding job.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [Job]{@link google.cloud.video.transcoder.v1beta1.Job}.
- *   Please see the
- *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
- *   for more details and examples.
- * @example
- * const [response] = await client.createJob(request);
- */
+    request: protos.google.cloud.video.transcoder.v1beta1.ICreateJobRequest,
+    callback: Callback<
+      protos.google.cloud.video.transcoder.v1beta1.IJob,
+      | protos.google.cloud.video.transcoder.v1beta1.ICreateJobRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  /**
+   * Creates a job in the specified region.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. The parent location to create and process this job.
+   *   Format: `projects/{project}/locations/{location}`
+   * @param {google.cloud.video.transcoder.v1beta1.Job} request.job
+   *   Required. Parameters for creating transcoding job.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Job]{@link google.cloud.video.transcoder.v1beta1.Job}.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
+   *   for more details and examples.
+   * @example
+   * const [response] = await client.createJob(request);
+   */
   createJob(
-      request: protos.google.cloud.video.transcoder.v1beta1.ICreateJobRequest,
-      optionsOrCallback?: CallOptions|Callback<
+    request: protos.google.cloud.video.transcoder.v1beta1.ICreateJobRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | Callback<
           protos.google.cloud.video.transcoder.v1beta1.IJob,
-          protos.google.cloud.video.transcoder.v1beta1.ICreateJobRequest|null|undefined,
-          {}|null|undefined>,
-      callback?: Callback<
-          protos.google.cloud.video.transcoder.v1beta1.IJob,
-          protos.google.cloud.video.transcoder.v1beta1.ICreateJobRequest|null|undefined,
-          {}|null|undefined>):
-      Promise<[
-        protos.google.cloud.video.transcoder.v1beta1.IJob,
-        protos.google.cloud.video.transcoder.v1beta1.ICreateJobRequest|undefined, {}|undefined
-      ]>|void {
+          | protos.google.cloud.video.transcoder.v1beta1.ICreateJobRequest
+          | null
+          | undefined,
+          {} | null | undefined
+        >,
+    callback?: Callback<
+      protos.google.cloud.video.transcoder.v1beta1.IJob,
+      | protos.google.cloud.video.transcoder.v1beta1.ICreateJobRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): Promise<
+    [
+      protos.google.cloud.video.transcoder.v1beta1.IJob,
+      (
+        | protos.google.cloud.video.transcoder.v1beta1.ICreateJobRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as CallOptions;
     }
     options = options || {};
@@ -364,70 +417,91 @@ export class TranscoderServiceClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'parent': request.parent || '',
+      parent: request.parent || '',
     });
     this.initialize();
     return this.innerApiCalls.createJob(request, options, callback);
   }
   getJob(
-      request: protos.google.cloud.video.transcoder.v1beta1.IGetJobRequest,
-      options?: CallOptions):
-      Promise<[
-        protos.google.cloud.video.transcoder.v1beta1.IJob,
-        protos.google.cloud.video.transcoder.v1beta1.IGetJobRequest|undefined, {}|undefined
-      ]>;
+    request: protos.google.cloud.video.transcoder.v1beta1.IGetJobRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.cloud.video.transcoder.v1beta1.IJob,
+      protos.google.cloud.video.transcoder.v1beta1.IGetJobRequest | undefined,
+      {} | undefined
+    ]
+  >;
   getJob(
-      request: protos.google.cloud.video.transcoder.v1beta1.IGetJobRequest,
-      options: CallOptions,
-      callback: Callback<
-          protos.google.cloud.video.transcoder.v1beta1.IJob,
-          protos.google.cloud.video.transcoder.v1beta1.IGetJobRequest|null|undefined,
-          {}|null|undefined>): void;
+    request: protos.google.cloud.video.transcoder.v1beta1.IGetJobRequest,
+    options: CallOptions,
+    callback: Callback<
+      protos.google.cloud.video.transcoder.v1beta1.IJob,
+      | protos.google.cloud.video.transcoder.v1beta1.IGetJobRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
   getJob(
-      request: protos.google.cloud.video.transcoder.v1beta1.IGetJobRequest,
-      callback: Callback<
-          protos.google.cloud.video.transcoder.v1beta1.IJob,
-          protos.google.cloud.video.transcoder.v1beta1.IGetJobRequest|null|undefined,
-          {}|null|undefined>): void;
-/**
- * Returns the job data.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.name
- *   Required. The name of the job to retrieve.
- *   Format: `projects/{project}/locations/{location}/jobs/{job}`
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [Job]{@link google.cloud.video.transcoder.v1beta1.Job}.
- *   Please see the
- *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
- *   for more details and examples.
- * @example
- * const [response] = await client.getJob(request);
- */
+    request: protos.google.cloud.video.transcoder.v1beta1.IGetJobRequest,
+    callback: Callback<
+      protos.google.cloud.video.transcoder.v1beta1.IJob,
+      | protos.google.cloud.video.transcoder.v1beta1.IGetJobRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  /**
+   * Returns the job data.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.name
+   *   Required. The name of the job to retrieve.
+   *   Format: `projects/{project}/locations/{location}/jobs/{job}`
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Job]{@link google.cloud.video.transcoder.v1beta1.Job}.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
+   *   for more details and examples.
+   * @example
+   * const [response] = await client.getJob(request);
+   */
   getJob(
-      request: protos.google.cloud.video.transcoder.v1beta1.IGetJobRequest,
-      optionsOrCallback?: CallOptions|Callback<
+    request: protos.google.cloud.video.transcoder.v1beta1.IGetJobRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | Callback<
           protos.google.cloud.video.transcoder.v1beta1.IJob,
-          protos.google.cloud.video.transcoder.v1beta1.IGetJobRequest|null|undefined,
-          {}|null|undefined>,
-      callback?: Callback<
-          protos.google.cloud.video.transcoder.v1beta1.IJob,
-          protos.google.cloud.video.transcoder.v1beta1.IGetJobRequest|null|undefined,
-          {}|null|undefined>):
-      Promise<[
-        protos.google.cloud.video.transcoder.v1beta1.IJob,
-        protos.google.cloud.video.transcoder.v1beta1.IGetJobRequest|undefined, {}|undefined
-      ]>|void {
+          | protos.google.cloud.video.transcoder.v1beta1.IGetJobRequest
+          | null
+          | undefined,
+          {} | null | undefined
+        >,
+    callback?: Callback<
+      protos.google.cloud.video.transcoder.v1beta1.IJob,
+      | protos.google.cloud.video.transcoder.v1beta1.IGetJobRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): Promise<
+    [
+      protos.google.cloud.video.transcoder.v1beta1.IJob,
+      protos.google.cloud.video.transcoder.v1beta1.IGetJobRequest | undefined,
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as CallOptions;
     }
     options = options || {};
@@ -436,70 +510,97 @@ export class TranscoderServiceClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'name': request.name || '',
+      name: request.name || '',
     });
     this.initialize();
     return this.innerApiCalls.getJob(request, options, callback);
   }
   deleteJob(
-      request: protos.google.cloud.video.transcoder.v1beta1.IDeleteJobRequest,
-      options?: CallOptions):
-      Promise<[
-        protos.google.protobuf.IEmpty,
-        protos.google.cloud.video.transcoder.v1beta1.IDeleteJobRequest|undefined, {}|undefined
-      ]>;
+    request: protos.google.cloud.video.transcoder.v1beta1.IDeleteJobRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.protobuf.IEmpty,
+      (
+        | protos.google.cloud.video.transcoder.v1beta1.IDeleteJobRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  >;
   deleteJob(
-      request: protos.google.cloud.video.transcoder.v1beta1.IDeleteJobRequest,
-      options: CallOptions,
-      callback: Callback<
-          protos.google.protobuf.IEmpty,
-          protos.google.cloud.video.transcoder.v1beta1.IDeleteJobRequest|null|undefined,
-          {}|null|undefined>): void;
+    request: protos.google.cloud.video.transcoder.v1beta1.IDeleteJobRequest,
+    options: CallOptions,
+    callback: Callback<
+      protos.google.protobuf.IEmpty,
+      | protos.google.cloud.video.transcoder.v1beta1.IDeleteJobRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
   deleteJob(
-      request: protos.google.cloud.video.transcoder.v1beta1.IDeleteJobRequest,
-      callback: Callback<
-          protos.google.protobuf.IEmpty,
-          protos.google.cloud.video.transcoder.v1beta1.IDeleteJobRequest|null|undefined,
-          {}|null|undefined>): void;
-/**
- * Deletes a job.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.name
- *   Required. The name of the job to delete.
- *   Format: `projects/{project}/locations/{location}/jobs/{job}`
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
- *   Please see the
- *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
- *   for more details and examples.
- * @example
- * const [response] = await client.deleteJob(request);
- */
+    request: protos.google.cloud.video.transcoder.v1beta1.IDeleteJobRequest,
+    callback: Callback<
+      protos.google.protobuf.IEmpty,
+      | protos.google.cloud.video.transcoder.v1beta1.IDeleteJobRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  /**
+   * Deletes a job.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.name
+   *   Required. The name of the job to delete.
+   *   Format: `projects/{project}/locations/{location}/jobs/{job}`
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
+   *   for more details and examples.
+   * @example
+   * const [response] = await client.deleteJob(request);
+   */
   deleteJob(
-      request: protos.google.cloud.video.transcoder.v1beta1.IDeleteJobRequest,
-      optionsOrCallback?: CallOptions|Callback<
+    request: protos.google.cloud.video.transcoder.v1beta1.IDeleteJobRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | Callback<
           protos.google.protobuf.IEmpty,
-          protos.google.cloud.video.transcoder.v1beta1.IDeleteJobRequest|null|undefined,
-          {}|null|undefined>,
-      callback?: Callback<
-          protos.google.protobuf.IEmpty,
-          protos.google.cloud.video.transcoder.v1beta1.IDeleteJobRequest|null|undefined,
-          {}|null|undefined>):
-      Promise<[
-        protos.google.protobuf.IEmpty,
-        protos.google.cloud.video.transcoder.v1beta1.IDeleteJobRequest|undefined, {}|undefined
-      ]>|void {
+          | protos.google.cloud.video.transcoder.v1beta1.IDeleteJobRequest
+          | null
+          | undefined,
+          {} | null | undefined
+        >,
+    callback?: Callback<
+      protos.google.protobuf.IEmpty,
+      | protos.google.cloud.video.transcoder.v1beta1.IDeleteJobRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): Promise<
+    [
+      protos.google.protobuf.IEmpty,
+      (
+        | protos.google.cloud.video.transcoder.v1beta1.IDeleteJobRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as CallOptions;
     }
     options = options || {};
@@ -508,78 +609,105 @@ export class TranscoderServiceClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'name': request.name || '',
+      name: request.name || '',
     });
     this.initialize();
     return this.innerApiCalls.deleteJob(request, options, callback);
   }
   createJobTemplate(
-      request: protos.google.cloud.video.transcoder.v1beta1.ICreateJobTemplateRequest,
-      options?: CallOptions):
-      Promise<[
-        protos.google.cloud.video.transcoder.v1beta1.IJobTemplate,
-        protos.google.cloud.video.transcoder.v1beta1.ICreateJobTemplateRequest|undefined, {}|undefined
-      ]>;
+    request: protos.google.cloud.video.transcoder.v1beta1.ICreateJobTemplateRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.cloud.video.transcoder.v1beta1.IJobTemplate,
+      (
+        | protos.google.cloud.video.transcoder.v1beta1.ICreateJobTemplateRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  >;
   createJobTemplate(
-      request: protos.google.cloud.video.transcoder.v1beta1.ICreateJobTemplateRequest,
-      options: CallOptions,
-      callback: Callback<
-          protos.google.cloud.video.transcoder.v1beta1.IJobTemplate,
-          protos.google.cloud.video.transcoder.v1beta1.ICreateJobTemplateRequest|null|undefined,
-          {}|null|undefined>): void;
+    request: protos.google.cloud.video.transcoder.v1beta1.ICreateJobTemplateRequest,
+    options: CallOptions,
+    callback: Callback<
+      protos.google.cloud.video.transcoder.v1beta1.IJobTemplate,
+      | protos.google.cloud.video.transcoder.v1beta1.ICreateJobTemplateRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
   createJobTemplate(
-      request: protos.google.cloud.video.transcoder.v1beta1.ICreateJobTemplateRequest,
-      callback: Callback<
-          protos.google.cloud.video.transcoder.v1beta1.IJobTemplate,
-          protos.google.cloud.video.transcoder.v1beta1.ICreateJobTemplateRequest|null|undefined,
-          {}|null|undefined>): void;
-/**
- * Creates a job template in the specified region.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. The parent location to create this job template.
- *   Format: `projects/{project}/locations/{location}`
- * @param {google.cloud.video.transcoder.v1beta1.JobTemplate} request.jobTemplate
- *   Required. Parameters for creating job template.
- * @param {string} request.jobTemplateId
- *   Required. The ID to use for the job template, which will become the final component
- *   of the job template's resource name.
- *
- *   This value should be 4-63 characters, and valid characters must match the
- *   regular expression `{@link a-zA-Z0-9_-|a-zA-Z}*`.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [JobTemplate]{@link google.cloud.video.transcoder.v1beta1.JobTemplate}.
- *   Please see the
- *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
- *   for more details and examples.
- * @example
- * const [response] = await client.createJobTemplate(request);
- */
+    request: protos.google.cloud.video.transcoder.v1beta1.ICreateJobTemplateRequest,
+    callback: Callback<
+      protos.google.cloud.video.transcoder.v1beta1.IJobTemplate,
+      | protos.google.cloud.video.transcoder.v1beta1.ICreateJobTemplateRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  /**
+   * Creates a job template in the specified region.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. The parent location to create this job template.
+   *   Format: `projects/{project}/locations/{location}`
+   * @param {google.cloud.video.transcoder.v1beta1.JobTemplate} request.jobTemplate
+   *   Required. Parameters for creating job template.
+   * @param {string} request.jobTemplateId
+   *   Required. The ID to use for the job template, which will become the final component
+   *   of the job template's resource name.
+   *
+   *   This value should be 4-63 characters, and valid characters must match the
+   *   regular expression `{@link a-zA-Z0-9_-|a-zA-Z}*`.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [JobTemplate]{@link google.cloud.video.transcoder.v1beta1.JobTemplate}.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
+   *   for more details and examples.
+   * @example
+   * const [response] = await client.createJobTemplate(request);
+   */
   createJobTemplate(
-      request: protos.google.cloud.video.transcoder.v1beta1.ICreateJobTemplateRequest,
-      optionsOrCallback?: CallOptions|Callback<
+    request: protos.google.cloud.video.transcoder.v1beta1.ICreateJobTemplateRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | Callback<
           protos.google.cloud.video.transcoder.v1beta1.IJobTemplate,
-          protos.google.cloud.video.transcoder.v1beta1.ICreateJobTemplateRequest|null|undefined,
-          {}|null|undefined>,
-      callback?: Callback<
-          protos.google.cloud.video.transcoder.v1beta1.IJobTemplate,
-          protos.google.cloud.video.transcoder.v1beta1.ICreateJobTemplateRequest|null|undefined,
-          {}|null|undefined>):
-      Promise<[
-        protos.google.cloud.video.transcoder.v1beta1.IJobTemplate,
-        protos.google.cloud.video.transcoder.v1beta1.ICreateJobTemplateRequest|undefined, {}|undefined
-      ]>|void {
+          | protos.google.cloud.video.transcoder.v1beta1.ICreateJobTemplateRequest
+          | null
+          | undefined,
+          {} | null | undefined
+        >,
+    callback?: Callback<
+      protos.google.cloud.video.transcoder.v1beta1.IJobTemplate,
+      | protos.google.cloud.video.transcoder.v1beta1.ICreateJobTemplateRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): Promise<
+    [
+      protos.google.cloud.video.transcoder.v1beta1.IJobTemplate,
+      (
+        | protos.google.cloud.video.transcoder.v1beta1.ICreateJobTemplateRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as CallOptions;
     }
     options = options || {};
@@ -588,71 +716,98 @@ export class TranscoderServiceClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'parent': request.parent || '',
+      parent: request.parent || '',
     });
     this.initialize();
     return this.innerApiCalls.createJobTemplate(request, options, callback);
   }
   getJobTemplate(
-      request: protos.google.cloud.video.transcoder.v1beta1.IGetJobTemplateRequest,
-      options?: CallOptions):
-      Promise<[
-        protos.google.cloud.video.transcoder.v1beta1.IJobTemplate,
-        protos.google.cloud.video.transcoder.v1beta1.IGetJobTemplateRequest|undefined, {}|undefined
-      ]>;
+    request: protos.google.cloud.video.transcoder.v1beta1.IGetJobTemplateRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.cloud.video.transcoder.v1beta1.IJobTemplate,
+      (
+        | protos.google.cloud.video.transcoder.v1beta1.IGetJobTemplateRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  >;
   getJobTemplate(
-      request: protos.google.cloud.video.transcoder.v1beta1.IGetJobTemplateRequest,
-      options: CallOptions,
-      callback: Callback<
-          protos.google.cloud.video.transcoder.v1beta1.IJobTemplate,
-          protos.google.cloud.video.transcoder.v1beta1.IGetJobTemplateRequest|null|undefined,
-          {}|null|undefined>): void;
+    request: protos.google.cloud.video.transcoder.v1beta1.IGetJobTemplateRequest,
+    options: CallOptions,
+    callback: Callback<
+      protos.google.cloud.video.transcoder.v1beta1.IJobTemplate,
+      | protos.google.cloud.video.transcoder.v1beta1.IGetJobTemplateRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
   getJobTemplate(
-      request: protos.google.cloud.video.transcoder.v1beta1.IGetJobTemplateRequest,
-      callback: Callback<
-          protos.google.cloud.video.transcoder.v1beta1.IJobTemplate,
-          protos.google.cloud.video.transcoder.v1beta1.IGetJobTemplateRequest|null|undefined,
-          {}|null|undefined>): void;
-/**
- * Returns the job template data.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.name
- *   Required. The name of the job template to retrieve.
- *   Format:
- *   `projects/{project}/locations/{location}/jobTemplates/{job_template}`
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [JobTemplate]{@link google.cloud.video.transcoder.v1beta1.JobTemplate}.
- *   Please see the
- *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
- *   for more details and examples.
- * @example
- * const [response] = await client.getJobTemplate(request);
- */
+    request: protos.google.cloud.video.transcoder.v1beta1.IGetJobTemplateRequest,
+    callback: Callback<
+      protos.google.cloud.video.transcoder.v1beta1.IJobTemplate,
+      | protos.google.cloud.video.transcoder.v1beta1.IGetJobTemplateRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  /**
+   * Returns the job template data.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.name
+   *   Required. The name of the job template to retrieve.
+   *   Format:
+   *   `projects/{project}/locations/{location}/jobTemplates/{job_template}`
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [JobTemplate]{@link google.cloud.video.transcoder.v1beta1.JobTemplate}.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
+   *   for more details and examples.
+   * @example
+   * const [response] = await client.getJobTemplate(request);
+   */
   getJobTemplate(
-      request: protos.google.cloud.video.transcoder.v1beta1.IGetJobTemplateRequest,
-      optionsOrCallback?: CallOptions|Callback<
+    request: protos.google.cloud.video.transcoder.v1beta1.IGetJobTemplateRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | Callback<
           protos.google.cloud.video.transcoder.v1beta1.IJobTemplate,
-          protos.google.cloud.video.transcoder.v1beta1.IGetJobTemplateRequest|null|undefined,
-          {}|null|undefined>,
-      callback?: Callback<
-          protos.google.cloud.video.transcoder.v1beta1.IJobTemplate,
-          protos.google.cloud.video.transcoder.v1beta1.IGetJobTemplateRequest|null|undefined,
-          {}|null|undefined>):
-      Promise<[
-        protos.google.cloud.video.transcoder.v1beta1.IJobTemplate,
-        protos.google.cloud.video.transcoder.v1beta1.IGetJobTemplateRequest|undefined, {}|undefined
-      ]>|void {
+          | protos.google.cloud.video.transcoder.v1beta1.IGetJobTemplateRequest
+          | null
+          | undefined,
+          {} | null | undefined
+        >,
+    callback?: Callback<
+      protos.google.cloud.video.transcoder.v1beta1.IJobTemplate,
+      | protos.google.cloud.video.transcoder.v1beta1.IGetJobTemplateRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): Promise<
+    [
+      protos.google.cloud.video.transcoder.v1beta1.IJobTemplate,
+      (
+        | protos.google.cloud.video.transcoder.v1beta1.IGetJobTemplateRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as CallOptions;
     }
     options = options || {};
@@ -661,70 +816,97 @@ export class TranscoderServiceClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'name': request.name || '',
+      name: request.name || '',
     });
     this.initialize();
     return this.innerApiCalls.getJobTemplate(request, options, callback);
   }
   deleteJobTemplate(
-      request: protos.google.cloud.video.transcoder.v1beta1.IDeleteJobTemplateRequest,
-      options?: CallOptions):
-      Promise<[
-        protos.google.protobuf.IEmpty,
-        protos.google.cloud.video.transcoder.v1beta1.IDeleteJobTemplateRequest|undefined, {}|undefined
-      ]>;
+    request: protos.google.cloud.video.transcoder.v1beta1.IDeleteJobTemplateRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.protobuf.IEmpty,
+      (
+        | protos.google.cloud.video.transcoder.v1beta1.IDeleteJobTemplateRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  >;
   deleteJobTemplate(
-      request: protos.google.cloud.video.transcoder.v1beta1.IDeleteJobTemplateRequest,
-      options: CallOptions,
-      callback: Callback<
-          protos.google.protobuf.IEmpty,
-          protos.google.cloud.video.transcoder.v1beta1.IDeleteJobTemplateRequest|null|undefined,
-          {}|null|undefined>): void;
+    request: protos.google.cloud.video.transcoder.v1beta1.IDeleteJobTemplateRequest,
+    options: CallOptions,
+    callback: Callback<
+      protos.google.protobuf.IEmpty,
+      | protos.google.cloud.video.transcoder.v1beta1.IDeleteJobTemplateRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
   deleteJobTemplate(
-      request: protos.google.cloud.video.transcoder.v1beta1.IDeleteJobTemplateRequest,
-      callback: Callback<
-          protos.google.protobuf.IEmpty,
-          protos.google.cloud.video.transcoder.v1beta1.IDeleteJobTemplateRequest|null|undefined,
-          {}|null|undefined>): void;
-/**
- * Deletes a job template.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.name
- *   Required. The name of the job template to delete.
- *   `projects/{project}/locations/{location}/jobTemplates/{job_template}`
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
- *   Please see the
- *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
- *   for more details and examples.
- * @example
- * const [response] = await client.deleteJobTemplate(request);
- */
+    request: protos.google.cloud.video.transcoder.v1beta1.IDeleteJobTemplateRequest,
+    callback: Callback<
+      protos.google.protobuf.IEmpty,
+      | protos.google.cloud.video.transcoder.v1beta1.IDeleteJobTemplateRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): void;
+  /**
+   * Deletes a job template.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.name
+   *   Required. The name of the job template to delete.
+   *   `projects/{project}/locations/{location}/jobTemplates/{job_template}`
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is an object representing [Empty]{@link google.protobuf.Empty}.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#regular-methods)
+   *   for more details and examples.
+   * @example
+   * const [response] = await client.deleteJobTemplate(request);
+   */
   deleteJobTemplate(
-      request: protos.google.cloud.video.transcoder.v1beta1.IDeleteJobTemplateRequest,
-      optionsOrCallback?: CallOptions|Callback<
+    request: protos.google.cloud.video.transcoder.v1beta1.IDeleteJobTemplateRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | Callback<
           protos.google.protobuf.IEmpty,
-          protos.google.cloud.video.transcoder.v1beta1.IDeleteJobTemplateRequest|null|undefined,
-          {}|null|undefined>,
-      callback?: Callback<
-          protos.google.protobuf.IEmpty,
-          protos.google.cloud.video.transcoder.v1beta1.IDeleteJobTemplateRequest|null|undefined,
-          {}|null|undefined>):
-      Promise<[
-        protos.google.protobuf.IEmpty,
-        protos.google.cloud.video.transcoder.v1beta1.IDeleteJobTemplateRequest|undefined, {}|undefined
-      ]>|void {
+          | protos.google.cloud.video.transcoder.v1beta1.IDeleteJobTemplateRequest
+          | null
+          | undefined,
+          {} | null | undefined
+        >,
+    callback?: Callback<
+      protos.google.protobuf.IEmpty,
+      | protos.google.cloud.video.transcoder.v1beta1.IDeleteJobTemplateRequest
+      | null
+      | undefined,
+      {} | null | undefined
+    >
+  ): Promise<
+    [
+      protos.google.protobuf.IEmpty,
+      (
+        | protos.google.cloud.video.transcoder.v1beta1.IDeleteJobTemplateRequest
+        | undefined
+      ),
+      {} | undefined
+    ]
+  > | void {
     request = request || {};
     let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as CallOptions;
     }
     options = options || {};
@@ -733,80 +915,99 @@ export class TranscoderServiceClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'name': request.name || '',
+      name: request.name || '',
     });
     this.initialize();
     return this.innerApiCalls.deleteJobTemplate(request, options, callback);
   }
 
   listJobs(
-      request: protos.google.cloud.video.transcoder.v1beta1.IListJobsRequest,
-      options?: CallOptions):
-      Promise<[
-        protos.google.cloud.video.transcoder.v1beta1.IJob[],
-        protos.google.cloud.video.transcoder.v1beta1.IListJobsRequest|null,
-        protos.google.cloud.video.transcoder.v1beta1.IListJobsResponse
-      ]>;
+    request: protos.google.cloud.video.transcoder.v1beta1.IListJobsRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.cloud.video.transcoder.v1beta1.IJob[],
+      protos.google.cloud.video.transcoder.v1beta1.IListJobsRequest | null,
+      protos.google.cloud.video.transcoder.v1beta1.IListJobsResponse
+    ]
+  >;
   listJobs(
-      request: protos.google.cloud.video.transcoder.v1beta1.IListJobsRequest,
-      options: CallOptions,
-      callback: PaginationCallback<
-          protos.google.cloud.video.transcoder.v1beta1.IListJobsRequest,
-          protos.google.cloud.video.transcoder.v1beta1.IListJobsResponse|null|undefined,
-          protos.google.cloud.video.transcoder.v1beta1.IJob>): void;
+    request: protos.google.cloud.video.transcoder.v1beta1.IListJobsRequest,
+    options: CallOptions,
+    callback: PaginationCallback<
+      protos.google.cloud.video.transcoder.v1beta1.IListJobsRequest,
+      | protos.google.cloud.video.transcoder.v1beta1.IListJobsResponse
+      | null
+      | undefined,
+      protos.google.cloud.video.transcoder.v1beta1.IJob
+    >
+  ): void;
   listJobs(
-      request: protos.google.cloud.video.transcoder.v1beta1.IListJobsRequest,
-      callback: PaginationCallback<
-          protos.google.cloud.video.transcoder.v1beta1.IListJobsRequest,
-          protos.google.cloud.video.transcoder.v1beta1.IListJobsResponse|null|undefined,
-          protos.google.cloud.video.transcoder.v1beta1.IJob>): void;
-/**
- * Lists jobs in the specified region.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. Format: `projects/{project}/locations/{location}`
- * @param {number} request.pageSize
- *   The maximum number of items to return.
- * @param {string} request.pageToken
- *   The `next_page_token` value returned from a previous List request, if
- *   any.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is Array of [Job]{@link google.cloud.video.transcoder.v1beta1.Job}.
- *   The client library will perform auto-pagination by default: it will call the API as many
- *   times as needed and will merge results from all the pages into this array.
- *   Note that it can affect your quota.
- *   We recommend using `listJobsAsync()`
- *   method described below for async iteration which you can stop as needed.
- *   Please see the
- *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
- *   for more details and examples.
- */
+    request: protos.google.cloud.video.transcoder.v1beta1.IListJobsRequest,
+    callback: PaginationCallback<
+      protos.google.cloud.video.transcoder.v1beta1.IListJobsRequest,
+      | protos.google.cloud.video.transcoder.v1beta1.IListJobsResponse
+      | null
+      | undefined,
+      protos.google.cloud.video.transcoder.v1beta1.IJob
+    >
+  ): void;
+  /**
+   * Lists jobs in the specified region.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. Format: `projects/{project}/locations/{location}`
+   * @param {number} request.pageSize
+   *   The maximum number of items to return.
+   * @param {string} request.pageToken
+   *   The `next_page_token` value returned from a previous List request, if
+   *   any.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is Array of [Job]{@link google.cloud.video.transcoder.v1beta1.Job}.
+   *   The client library will perform auto-pagination by default: it will call the API as many
+   *   times as needed and will merge results from all the pages into this array.
+   *   Note that it can affect your quota.
+   *   We recommend using `listJobsAsync()`
+   *   method described below for async iteration which you can stop as needed.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
+   *   for more details and examples.
+   */
   listJobs(
-      request: protos.google.cloud.video.transcoder.v1beta1.IListJobsRequest,
-      optionsOrCallback?: CallOptions|PaginationCallback<
+    request: protos.google.cloud.video.transcoder.v1beta1.IListJobsRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | PaginationCallback<
           protos.google.cloud.video.transcoder.v1beta1.IListJobsRequest,
-          protos.google.cloud.video.transcoder.v1beta1.IListJobsResponse|null|undefined,
-          protos.google.cloud.video.transcoder.v1beta1.IJob>,
-      callback?: PaginationCallback<
-          protos.google.cloud.video.transcoder.v1beta1.IListJobsRequest,
-          protos.google.cloud.video.transcoder.v1beta1.IListJobsResponse|null|undefined,
-          protos.google.cloud.video.transcoder.v1beta1.IJob>):
-      Promise<[
-        protos.google.cloud.video.transcoder.v1beta1.IJob[],
-        protos.google.cloud.video.transcoder.v1beta1.IListJobsRequest|null,
-        protos.google.cloud.video.transcoder.v1beta1.IListJobsResponse
-      ]>|void {
+          | protos.google.cloud.video.transcoder.v1beta1.IListJobsResponse
+          | null
+          | undefined,
+          protos.google.cloud.video.transcoder.v1beta1.IJob
+        >,
+    callback?: PaginationCallback<
+      protos.google.cloud.video.transcoder.v1beta1.IListJobsRequest,
+      | protos.google.cloud.video.transcoder.v1beta1.IListJobsResponse
+      | null
+      | undefined,
+      protos.google.cloud.video.transcoder.v1beta1.IJob
+    >
+  ): Promise<
+    [
+      protos.google.cloud.video.transcoder.v1beta1.IJob[],
+      protos.google.cloud.video.transcoder.v1beta1.IListJobsRequest | null,
+      protos.google.cloud.video.transcoder.v1beta1.IListJobsResponse
+    ]
+  > | void {
     request = request || {};
     let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as CallOptions;
     }
     options = options || {};
@@ -815,39 +1016,39 @@ export class TranscoderServiceClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'parent': request.parent || '',
+      parent: request.parent || '',
     });
     this.initialize();
     return this.innerApiCalls.listJobs(request, options, callback);
   }
 
-/**
- * Equivalent to `method.name.toCamelCase()`, but returns a NodeJS Stream object.
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. Format: `projects/{project}/locations/{location}`
- * @param {number} request.pageSize
- *   The maximum number of items to return.
- * @param {string} request.pageToken
- *   The `next_page_token` value returned from a previous List request, if
- *   any.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Stream}
- *   An object stream which emits an object representing [Job]{@link google.cloud.video.transcoder.v1beta1.Job} on 'data' event.
- *   The client library will perform auto-pagination by default: it will call the API as many
- *   times as needed. Note that it can affect your quota.
- *   We recommend using `listJobsAsync()`
- *   method described below for async iteration which you can stop as needed.
- *   Please see the
- *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
- *   for more details and examples.
- */
+  /**
+   * Equivalent to `method.name.toCamelCase()`, but returns a NodeJS Stream object.
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. Format: `projects/{project}/locations/{location}`
+   * @param {number} request.pageSize
+   *   The maximum number of items to return.
+   * @param {string} request.pageToken
+   *   The `next_page_token` value returned from a previous List request, if
+   *   any.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Stream}
+   *   An object stream which emits an object representing [Job]{@link google.cloud.video.transcoder.v1beta1.Job} on 'data' event.
+   *   The client library will perform auto-pagination by default: it will call the API as many
+   *   times as needed. Note that it can affect your quota.
+   *   We recommend using `listJobsAsync()`
+   *   method described below for async iteration which you can stop as needed.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
+   *   for more details and examples.
+   */
   listJobsStream(
-      request?: protos.google.cloud.video.transcoder.v1beta1.IListJobsRequest,
-      options?: CallOptions):
-    Transform{
+    request?: protos.google.cloud.video.transcoder.v1beta1.IListJobsRequest,
+    options?: CallOptions
+  ): Transform {
     request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -855,7 +1056,7 @@ export class TranscoderServiceClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'parent': request.parent || '',
+      parent: request.parent || '',
     });
     const callSettings = new gax.CallSettings(options);
     this.initialize();
@@ -866,39 +1067,39 @@ export class TranscoderServiceClient {
     );
   }
 
-/**
- * Equivalent to `listJobs`, but returns an iterable object.
- *
- * `for`-`await`-`of` syntax is used with the iterable to get response elements on-demand.
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. Format: `projects/{project}/locations/{location}`
- * @param {number} request.pageSize
- *   The maximum number of items to return.
- * @param {string} request.pageToken
- *   The `next_page_token` value returned from a previous List request, if
- *   any.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Object}
- *   An iterable Object that allows [async iteration](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols).
- *   When you iterate the returned iterable, each element will be an object representing
- *   [Job]{@link google.cloud.video.transcoder.v1beta1.Job}. The API will be called under the hood as needed, once per the page,
- *   so you can stop the iteration when you don't need more results.
- *   Please see the
- *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
- *   for more details and examples.
- * @example
- * const iterable = client.listJobsAsync(request);
- * for await (const response of iterable) {
- *   // process response
- * }
- */
+  /**
+   * Equivalent to `listJobs`, but returns an iterable object.
+   *
+   * `for`-`await`-`of` syntax is used with the iterable to get response elements on-demand.
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. Format: `projects/{project}/locations/{location}`
+   * @param {number} request.pageSize
+   *   The maximum number of items to return.
+   * @param {string} request.pageToken
+   *   The `next_page_token` value returned from a previous List request, if
+   *   any.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Object}
+   *   An iterable Object that allows [async iteration](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols).
+   *   When you iterate the returned iterable, each element will be an object representing
+   *   [Job]{@link google.cloud.video.transcoder.v1beta1.Job}. The API will be called under the hood as needed, once per the page,
+   *   so you can stop the iteration when you don't need more results.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
+   *   for more details and examples.
+   * @example
+   * const iterable = client.listJobsAsync(request);
+   * for await (const response of iterable) {
+   *   // process response
+   * }
+   */
   listJobsAsync(
-      request?: protos.google.cloud.video.transcoder.v1beta1.IListJobsRequest,
-      options?: CallOptions):
-    AsyncIterable<protos.google.cloud.video.transcoder.v1beta1.IJob>{
+    request?: protos.google.cloud.video.transcoder.v1beta1.IListJobsRequest,
+    options?: CallOptions
+  ): AsyncIterable<protos.google.cloud.video.transcoder.v1beta1.IJob> {
     request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -906,86 +1107,105 @@ export class TranscoderServiceClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'parent': request.parent || '',
+      parent: request.parent || '',
     });
     options = options || {};
     const callSettings = new gax.CallSettings(options);
     this.initialize();
     return this.descriptors.page.listJobs.asyncIterate(
       this.innerApiCalls['listJobs'] as GaxCall,
-      request as unknown as RequestType,
+      (request as unknown) as RequestType,
       callSettings
     ) as AsyncIterable<protos.google.cloud.video.transcoder.v1beta1.IJob>;
   }
   listJobTemplates(
-      request: protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesRequest,
-      options?: CallOptions):
-      Promise<[
-        protos.google.cloud.video.transcoder.v1beta1.IJobTemplate[],
-        protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesRequest|null,
-        protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesResponse
-      ]>;
+    request: protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesRequest,
+    options?: CallOptions
+  ): Promise<
+    [
+      protos.google.cloud.video.transcoder.v1beta1.IJobTemplate[],
+      protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesRequest | null,
+      protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesResponse
+    ]
+  >;
   listJobTemplates(
-      request: protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesRequest,
-      options: CallOptions,
-      callback: PaginationCallback<
-          protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesRequest,
-          protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesResponse|null|undefined,
-          protos.google.cloud.video.transcoder.v1beta1.IJobTemplate>): void;
+    request: protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesRequest,
+    options: CallOptions,
+    callback: PaginationCallback<
+      protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesRequest,
+      | protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesResponse
+      | null
+      | undefined,
+      protos.google.cloud.video.transcoder.v1beta1.IJobTemplate
+    >
+  ): void;
   listJobTemplates(
-      request: protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesRequest,
-      callback: PaginationCallback<
-          protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesRequest,
-          protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesResponse|null|undefined,
-          protos.google.cloud.video.transcoder.v1beta1.IJobTemplate>): void;
-/**
- * Lists job templates in the specified region.
- *
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. The parent location from which to retrieve the collection of job templates.
- *   Format: `projects/{project}/locations/{location}`
- * @param {number} request.pageSize
- *   The maximum number of items to return.
- * @param {string} request.pageToken
- *   The `next_page_token` value returned from a previous List request, if
- *   any.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Promise} - The promise which resolves to an array.
- *   The first element of the array is Array of [JobTemplate]{@link google.cloud.video.transcoder.v1beta1.JobTemplate}.
- *   The client library will perform auto-pagination by default: it will call the API as many
- *   times as needed and will merge results from all the pages into this array.
- *   Note that it can affect your quota.
- *   We recommend using `listJobTemplatesAsync()`
- *   method described below for async iteration which you can stop as needed.
- *   Please see the
- *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
- *   for more details and examples.
- */
+    request: protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesRequest,
+    callback: PaginationCallback<
+      protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesRequest,
+      | protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesResponse
+      | null
+      | undefined,
+      protos.google.cloud.video.transcoder.v1beta1.IJobTemplate
+    >
+  ): void;
+  /**
+   * Lists job templates in the specified region.
+   *
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. The parent location from which to retrieve the collection of job templates.
+   *   Format: `projects/{project}/locations/{location}`
+   * @param {number} request.pageSize
+   *   The maximum number of items to return.
+   * @param {string} request.pageToken
+   *   The `next_page_token` value returned from a previous List request, if
+   *   any.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Promise} - The promise which resolves to an array.
+   *   The first element of the array is Array of [JobTemplate]{@link google.cloud.video.transcoder.v1beta1.JobTemplate}.
+   *   The client library will perform auto-pagination by default: it will call the API as many
+   *   times as needed and will merge results from all the pages into this array.
+   *   Note that it can affect your quota.
+   *   We recommend using `listJobTemplatesAsync()`
+   *   method described below for async iteration which you can stop as needed.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
+   *   for more details and examples.
+   */
   listJobTemplates(
-      request: protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesRequest,
-      optionsOrCallback?: CallOptions|PaginationCallback<
+    request: protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesRequest,
+    optionsOrCallback?:
+      | CallOptions
+      | PaginationCallback<
           protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesRequest,
-          protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesResponse|null|undefined,
-          protos.google.cloud.video.transcoder.v1beta1.IJobTemplate>,
-      callback?: PaginationCallback<
-          protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesRequest,
-          protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesResponse|null|undefined,
-          protos.google.cloud.video.transcoder.v1beta1.IJobTemplate>):
-      Promise<[
-        protos.google.cloud.video.transcoder.v1beta1.IJobTemplate[],
-        protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesRequest|null,
-        protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesResponse
-      ]>|void {
+          | protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesResponse
+          | null
+          | undefined,
+          protos.google.cloud.video.transcoder.v1beta1.IJobTemplate
+        >,
+    callback?: PaginationCallback<
+      protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesRequest,
+      | protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesResponse
+      | null
+      | undefined,
+      protos.google.cloud.video.transcoder.v1beta1.IJobTemplate
+    >
+  ): Promise<
+    [
+      protos.google.cloud.video.transcoder.v1beta1.IJobTemplate[],
+      protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesRequest | null,
+      protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesResponse
+    ]
+  > | void {
     request = request || {};
     let options: CallOptions;
     if (typeof optionsOrCallback === 'function' && callback === undefined) {
       callback = optionsOrCallback;
       options = {};
-    }
-    else {
+    } else {
       options = optionsOrCallback as CallOptions;
     }
     options = options || {};
@@ -994,40 +1214,40 @@ export class TranscoderServiceClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'parent': request.parent || '',
+      parent: request.parent || '',
     });
     this.initialize();
     return this.innerApiCalls.listJobTemplates(request, options, callback);
   }
 
-/**
- * Equivalent to `method.name.toCamelCase()`, but returns a NodeJS Stream object.
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. The parent location from which to retrieve the collection of job templates.
- *   Format: `projects/{project}/locations/{location}`
- * @param {number} request.pageSize
- *   The maximum number of items to return.
- * @param {string} request.pageToken
- *   The `next_page_token` value returned from a previous List request, if
- *   any.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Stream}
- *   An object stream which emits an object representing [JobTemplate]{@link google.cloud.video.transcoder.v1beta1.JobTemplate} on 'data' event.
- *   The client library will perform auto-pagination by default: it will call the API as many
- *   times as needed. Note that it can affect your quota.
- *   We recommend using `listJobTemplatesAsync()`
- *   method described below for async iteration which you can stop as needed.
- *   Please see the
- *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
- *   for more details and examples.
- */
+  /**
+   * Equivalent to `method.name.toCamelCase()`, but returns a NodeJS Stream object.
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. The parent location from which to retrieve the collection of job templates.
+   *   Format: `projects/{project}/locations/{location}`
+   * @param {number} request.pageSize
+   *   The maximum number of items to return.
+   * @param {string} request.pageToken
+   *   The `next_page_token` value returned from a previous List request, if
+   *   any.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Stream}
+   *   An object stream which emits an object representing [JobTemplate]{@link google.cloud.video.transcoder.v1beta1.JobTemplate} on 'data' event.
+   *   The client library will perform auto-pagination by default: it will call the API as many
+   *   times as needed. Note that it can affect your quota.
+   *   We recommend using `listJobTemplatesAsync()`
+   *   method described below for async iteration which you can stop as needed.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
+   *   for more details and examples.
+   */
   listJobTemplatesStream(
-      request?: protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesRequest,
-      options?: CallOptions):
-    Transform{
+    request?: protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesRequest,
+    options?: CallOptions
+  ): Transform {
     request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -1035,7 +1255,7 @@ export class TranscoderServiceClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'parent': request.parent || '',
+      parent: request.parent || '',
     });
     const callSettings = new gax.CallSettings(options);
     this.initialize();
@@ -1046,40 +1266,40 @@ export class TranscoderServiceClient {
     );
   }
 
-/**
- * Equivalent to `listJobTemplates`, but returns an iterable object.
- *
- * `for`-`await`-`of` syntax is used with the iterable to get response elements on-demand.
- * @param {Object} request
- *   The request object that will be sent.
- * @param {string} request.parent
- *   Required. The parent location from which to retrieve the collection of job templates.
- *   Format: `projects/{project}/locations/{location}`
- * @param {number} request.pageSize
- *   The maximum number of items to return.
- * @param {string} request.pageToken
- *   The `next_page_token` value returned from a previous List request, if
- *   any.
- * @param {object} [options]
- *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
- * @returns {Object}
- *   An iterable Object that allows [async iteration](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols).
- *   When you iterate the returned iterable, each element will be an object representing
- *   [JobTemplate]{@link google.cloud.video.transcoder.v1beta1.JobTemplate}. The API will be called under the hood as needed, once per the page,
- *   so you can stop the iteration when you don't need more results.
- *   Please see the
- *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
- *   for more details and examples.
- * @example
- * const iterable = client.listJobTemplatesAsync(request);
- * for await (const response of iterable) {
- *   // process response
- * }
- */
+  /**
+   * Equivalent to `listJobTemplates`, but returns an iterable object.
+   *
+   * `for`-`await`-`of` syntax is used with the iterable to get response elements on-demand.
+   * @param {Object} request
+   *   The request object that will be sent.
+   * @param {string} request.parent
+   *   Required. The parent location from which to retrieve the collection of job templates.
+   *   Format: `projects/{project}/locations/{location}`
+   * @param {number} request.pageSize
+   *   The maximum number of items to return.
+   * @param {string} request.pageToken
+   *   The `next_page_token` value returned from a previous List request, if
+   *   any.
+   * @param {object} [options]
+   *   Call options. See {@link https://googleapis.dev/nodejs/google-gax/latest/interfaces/CallOptions.html|CallOptions} for more details.
+   * @returns {Object}
+   *   An iterable Object that allows [async iteration](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols).
+   *   When you iterate the returned iterable, each element will be an object representing
+   *   [JobTemplate]{@link google.cloud.video.transcoder.v1beta1.JobTemplate}. The API will be called under the hood as needed, once per the page,
+   *   so you can stop the iteration when you don't need more results.
+   *   Please see the
+   *   [documentation](https://github.com/googleapis/gax-nodejs/blob/master/client-libraries.md#auto-pagination)
+   *   for more details and examples.
+   * @example
+   * const iterable = client.listJobTemplatesAsync(request);
+   * for await (const response of iterable) {
+   *   // process response
+   * }
+   */
   listJobTemplatesAsync(
-      request?: protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesRequest,
-      options?: CallOptions):
-    AsyncIterable<protos.google.cloud.video.transcoder.v1beta1.IJobTemplate>{
+    request?: protos.google.cloud.video.transcoder.v1beta1.IListJobTemplatesRequest,
+    options?: CallOptions
+  ): AsyncIterable<protos.google.cloud.video.transcoder.v1beta1.IJobTemplate> {
     request = request || {};
     options = options || {};
     options.otherArgs = options.otherArgs || {};
@@ -1087,14 +1307,14 @@ export class TranscoderServiceClient {
     options.otherArgs.headers[
       'x-goog-request-params'
     ] = gax.routingHeader.fromParams({
-      'parent': request.parent || '',
+      parent: request.parent || '',
     });
     options = options || {};
     const callSettings = new gax.CallSettings(options);
     this.initialize();
     return this.descriptors.page.listJobTemplates.asyncIterate(
       this.innerApiCalls['listJobTemplates'] as GaxCall,
-      request as unknown as RequestType,
+      (request as unknown) as RequestType,
       callSettings
     ) as AsyncIterable<protos.google.cloud.video.transcoder.v1beta1.IJobTemplate>;
   }
@@ -1110,7 +1330,7 @@ export class TranscoderServiceClient {
    * @param {string} job
    * @returns {string} Resource name string.
    */
-  jobPath(project:string,location:string,job:string) {
+  jobPath(project: string, location: string, job: string) {
     return this.pathTemplates.jobPathTemplate.render({
       project: project,
       location: location,
@@ -1159,7 +1379,7 @@ export class TranscoderServiceClient {
    * @param {string} job_template
    * @returns {string} Resource name string.
    */
-  jobTemplatePath(project:string,location:string,jobTemplate:string) {
+  jobTemplatePath(project: string, location: string, jobTemplate: string) {
     return this.pathTemplates.jobTemplatePathTemplate.render({
       project: project,
       location: location,
@@ -1175,7 +1395,8 @@ export class TranscoderServiceClient {
    * @returns {string} A string representing the project.
    */
   matchProjectFromJobTemplateName(jobTemplateName: string) {
-    return this.pathTemplates.jobTemplatePathTemplate.match(jobTemplateName).project;
+    return this.pathTemplates.jobTemplatePathTemplate.match(jobTemplateName)
+      .project;
   }
 
   /**
@@ -1186,7 +1407,8 @@ export class TranscoderServiceClient {
    * @returns {string} A string representing the location.
    */
   matchLocationFromJobTemplateName(jobTemplateName: string) {
-    return this.pathTemplates.jobTemplatePathTemplate.match(jobTemplateName).location;
+    return this.pathTemplates.jobTemplatePathTemplate.match(jobTemplateName)
+      .location;
   }
 
   /**
@@ -1197,7 +1419,8 @@ export class TranscoderServiceClient {
    * @returns {string} A string representing the job_template.
    */
   matchJobTemplateFromJobTemplateName(jobTemplateName: string) {
-    return this.pathTemplates.jobTemplatePathTemplate.match(jobTemplateName).job_template;
+    return this.pathTemplates.jobTemplatePathTemplate.match(jobTemplateName)
+      .job_template;
   }
 
   /**
@@ -1207,7 +1430,7 @@ export class TranscoderServiceClient {
    * @param {string} location
    * @returns {string} Resource name string.
    */
-  locationPath(project:string,location:string) {
+  locationPath(project: string, location: string) {
     return this.pathTemplates.locationPathTemplate.render({
       project: project,
       location: location,

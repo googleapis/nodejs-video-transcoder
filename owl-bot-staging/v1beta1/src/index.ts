@@ -22,4 +22,4 @@ type TranscoderServiceClient = v1beta1.TranscoderServiceClient;
 export {v1beta1, TranscoderServiceClient};
 export default {v1beta1, TranscoderServiceClient};
 import * as protos from '../protos/protos';
-export {protos}
+export {protos};
