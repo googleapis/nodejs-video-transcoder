@@ -26,9 +26,8 @@ function main(projectId, location, inputUri, outputUri) {
   // outputUri = 'gs://my-bucket/my-output-folder/';
 
   // Imports the Transcoder library
-  const {
-    TranscoderServiceClient,
-  } = require('@google-cloud/video-transcoder').v1beta1;
+  const {TranscoderServiceClient} =
+    require('@google-cloud/video-transcoder').v1beta1;
 
   // Instantiates a client
   const transcoderServiceClient = new TranscoderServiceClient();

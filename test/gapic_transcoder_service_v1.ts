@@ -28,10 +28,9 @@ import {PassThrough} from 'stream';
 import {protobuf} from 'google-gax';
 
 function generateSampleMessage<T extends object>(instance: T) {
-  const filledObject = (instance.constructor as typeof protobuf.Message).toObject(
-    instance as protobuf.Message<T>,
-    {defaults: true}
-  );
+  const filledObject = (
+    instance.constructor as typeof protobuf.Message
+  ).toObject(instance as protobuf.Message<T>, {defaults: true});
   return (instance.constructor as typeof protobuf.Message).fromObject(
     filledObject
   ) as T;
@@ -249,9 +248,8 @@ describe('v1.TranscoderServiceClient', () => {
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.video.transcoder.v1.Job()
       );
-      client.innerApiCalls.createJob = stubSimpleCallWithCallback(
-        expectedResponse
-      );
+      client.innerApiCalls.createJob =
+        stubSimpleCallWithCallback(expectedResponse);
       const promise = new Promise((resolve, reject) => {
         client.createJob(
           request,
@@ -358,9 +356,8 @@ describe('v1.TranscoderServiceClient', () => {
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.video.transcoder.v1.Job()
       );
-      client.innerApiCalls.getJob = stubSimpleCallWithCallback(
-        expectedResponse
-      );
+      client.innerApiCalls.getJob =
+        stubSimpleCallWithCallback(expectedResponse);
       const promise = new Promise((resolve, reject) => {
         client.getJob(
           request,
@@ -467,9 +464,8 @@ describe('v1.TranscoderServiceClient', () => {
       const expectedResponse = generateSampleMessage(
         new protos.google.protobuf.Empty()
       );
-      client.innerApiCalls.deleteJob = stubSimpleCallWithCallback(
-        expectedResponse
-      );
+      client.innerApiCalls.deleteJob =
+        stubSimpleCallWithCallback(expectedResponse);
       const promise = new Promise((resolve, reject) => {
         client.deleteJob(
           request,
@@ -576,9 +572,8 @@ describe('v1.TranscoderServiceClient', () => {
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.video.transcoder.v1.JobTemplate()
       );
-      client.innerApiCalls.createJobTemplate = stubSimpleCallWithCallback(
-        expectedResponse
-      );
+      client.innerApiCalls.createJobTemplate =
+        stubSimpleCallWithCallback(expectedResponse);
       const promise = new Promise((resolve, reject) => {
         client.createJobTemplate(
           request,
@@ -688,9 +683,8 @@ describe('v1.TranscoderServiceClient', () => {
       const expectedResponse = generateSampleMessage(
         new protos.google.cloud.video.transcoder.v1.JobTemplate()
       );
-      client.innerApiCalls.getJobTemplate = stubSimpleCallWithCallback(
-        expectedResponse
-      );
+      client.innerApiCalls.getJobTemplate =
+        stubSimpleCallWithCallback(expectedResponse);
       const promise = new Promise((resolve, reject) => {
         client.getJobTemplate(
           request,
@@ -800,9 +794,8 @@ describe('v1.TranscoderServiceClient', () => {
       const expectedResponse = generateSampleMessage(
         new protos.google.protobuf.Empty()
       );
-      client.innerApiCalls.deleteJobTemplate = stubSimpleCallWithCallback(
-        expectedResponse
-      );
+      client.innerApiCalls.deleteJobTemplate =
+        stubSimpleCallWithCallback(expectedResponse);
       const promise = new Promise((resolve, reject) => {
         client.deleteJobTemplate(
           request,
@@ -928,9 +921,8 @@ describe('v1.TranscoderServiceClient', () => {
           new protos.google.cloud.video.transcoder.v1.Job()
         ),
       ];
-      client.innerApiCalls.listJobs = stubSimpleCallWithCallback(
-        expectedResponse
-      );
+      client.innerApiCalls.listJobs =
+        stubSimpleCallWithCallback(expectedResponse);
       const promise = new Promise((resolve, reject) => {
         client.listJobs(
           request,
@@ -1005,9 +997,8 @@ describe('v1.TranscoderServiceClient', () => {
           new protos.google.cloud.video.transcoder.v1.Job()
         ),
       ];
-      client.descriptors.page.listJobs.createStream = stubPageStreamingCall(
-        expectedResponse
-      );
+      client.descriptors.page.listJobs.createStream =
+        stubPageStreamingCall(expectedResponse);
       const stream = client.listJobsStream(request);
       const promise = new Promise((resolve, reject) => {
         const responses: protos.google.cloud.video.transcoder.v1.Job[] = [];
@@ -1105,9 +1096,8 @@ describe('v1.TranscoderServiceClient', () => {
           new protos.google.cloud.video.transcoder.v1.Job()
         ),
       ];
-      client.descriptors.page.listJobs.asyncIterate = stubAsyncIterationCall(
-        expectedResponse
-      );
+      client.descriptors.page.listJobs.asyncIterate =
+        stubAsyncIterationCall(expectedResponse);
       const responses: protos.google.cloud.video.transcoder.v1.IJob[] = [];
       const iterable = client.listJobsAsync(request);
       for await (const resource of iterable) {
@@ -1231,9 +1221,8 @@ describe('v1.TranscoderServiceClient', () => {
           new protos.google.cloud.video.transcoder.v1.JobTemplate()
         ),
       ];
-      client.innerApiCalls.listJobTemplates = stubSimpleCallWithCallback(
-        expectedResponse
-      );
+      client.innerApiCalls.listJobTemplates =
+        stubSimpleCallWithCallback(expectedResponse);
       const promise = new Promise((resolve, reject) => {
         client.listJobTemplates(
           request,
@@ -1313,12 +1302,12 @@ describe('v1.TranscoderServiceClient', () => {
           new protos.google.cloud.video.transcoder.v1.JobTemplate()
         ),
       ];
-      client.descriptors.page.listJobTemplates.createStream = stubPageStreamingCall(
-        expectedResponse
-      );
+      client.descriptors.page.listJobTemplates.createStream =
+        stubPageStreamingCall(expectedResponse);
       const stream = client.listJobTemplatesStream(request);
       const promise = new Promise((resolve, reject) => {
-        const responses: protos.google.cloud.video.transcoder.v1.JobTemplate[] = [];
+        const responses: protos.google.cloud.video.transcoder.v1.JobTemplate[] =
+          [];
         stream.on(
           'data',
           (response: protos.google.cloud.video.transcoder.v1.JobTemplate) => {
@@ -1340,10 +1329,9 @@ describe('v1.TranscoderServiceClient', () => {
           .calledWith(client.innerApiCalls.listJobTemplates, request)
       );
       assert.strictEqual(
-        (client.descriptors.page.listJobTemplates
-          .createStream as SinonStub).getCall(0).args[2].otherArgs.headers[
-          'x-goog-request-params'
-        ],
+        (
+          client.descriptors.page.listJobTemplates.createStream as SinonStub
+        ).getCall(0).args[2].otherArgs.headers['x-goog-request-params'],
         expectedHeaderRequestParams
       );
     });
@@ -1360,13 +1348,12 @@ describe('v1.TranscoderServiceClient', () => {
       request.parent = '';
       const expectedHeaderRequestParams = 'parent=';
       const expectedError = new Error('expected');
-      client.descriptors.page.listJobTemplates.createStream = stubPageStreamingCall(
-        undefined,
-        expectedError
-      );
+      client.descriptors.page.listJobTemplates.createStream =
+        stubPageStreamingCall(undefined, expectedError);
       const stream = client.listJobTemplatesStream(request);
       const promise = new Promise((resolve, reject) => {
-        const responses: protos.google.cloud.video.transcoder.v1.JobTemplate[] = [];
+        const responses: protos.google.cloud.video.transcoder.v1.JobTemplate[] =
+          [];
         stream.on(
           'data',
           (response: protos.google.cloud.video.transcoder.v1.JobTemplate) => {
@@ -1387,10 +1374,9 @@ describe('v1.TranscoderServiceClient', () => {
           .calledWith(client.innerApiCalls.listJobTemplates, request)
       );
       assert.strictEqual(
-        (client.descriptors.page.listJobTemplates
-          .createStream as SinonStub).getCall(0).args[2].otherArgs.headers[
-          'x-goog-request-params'
-        ],
+        (
+          client.descriptors.page.listJobTemplates.createStream as SinonStub
+        ).getCall(0).args[2].otherArgs.headers['x-goog-request-params'],
         expectedHeaderRequestParams
       );
     });
@@ -1417,25 +1403,25 @@ describe('v1.TranscoderServiceClient', () => {
           new protos.google.cloud.video.transcoder.v1.JobTemplate()
         ),
       ];
-      client.descriptors.page.listJobTemplates.asyncIterate = stubAsyncIterationCall(
-        expectedResponse
-      );
-      const responses: protos.google.cloud.video.transcoder.v1.IJobTemplate[] = [];
+      client.descriptors.page.listJobTemplates.asyncIterate =
+        stubAsyncIterationCall(expectedResponse);
+      const responses: protos.google.cloud.video.transcoder.v1.IJobTemplate[] =
+        [];
       const iterable = client.listJobTemplatesAsync(request);
       for await (const resource of iterable) {
         responses.push(resource!);
       }
       assert.deepStrictEqual(responses, expectedResponse);
       assert.deepStrictEqual(
-        (client.descriptors.page.listJobTemplates
-          .asyncIterate as SinonStub).getCall(0).args[1],
+        (
+          client.descriptors.page.listJobTemplates.asyncIterate as SinonStub
+        ).getCall(0).args[1],
         request
       );
       assert.strictEqual(
-        (client.descriptors.page.listJobTemplates
-          .asyncIterate as SinonStub).getCall(0).args[2].otherArgs.headers[
-          'x-goog-request-params'
-        ],
+        (
+          client.descriptors.page.listJobTemplates.asyncIterate as SinonStub
+        ).getCall(0).args[2].otherArgs.headers['x-goog-request-params'],
         expectedHeaderRequestParams
       );
     });
@@ -1452,27 +1438,26 @@ describe('v1.TranscoderServiceClient', () => {
       request.parent = '';
       const expectedHeaderRequestParams = 'parent=';
       const expectedError = new Error('expected');
-      client.descriptors.page.listJobTemplates.asyncIterate = stubAsyncIterationCall(
-        undefined,
-        expectedError
-      );
+      client.descriptors.page.listJobTemplates.asyncIterate =
+        stubAsyncIterationCall(undefined, expectedError);
       const iterable = client.listJobTemplatesAsync(request);
       await assert.rejects(async () => {
-        const responses: protos.google.cloud.video.transcoder.v1.IJobTemplate[] = [];
+        const responses: protos.google.cloud.video.transcoder.v1.IJobTemplate[] =
+          [];
         for await (const resource of iterable) {
           responses.push(resource!);
         }
       });
       assert.deepStrictEqual(
-        (client.descriptors.page.listJobTemplates
-          .asyncIterate as SinonStub).getCall(0).args[1],
+        (
+          client.descriptors.page.listJobTemplates.asyncIterate as SinonStub
+        ).getCall(0).args[1],
         request
       );
       assert.strictEqual(
-        (client.descriptors.page.listJobTemplates
-          .asyncIterate as SinonStub).getCall(0).args[2].otherArgs.headers[
-          'x-goog-request-params'
-        ],
+        (
+          client.descriptors.page.listJobTemplates.asyncIterate as SinonStub
+        ).getCall(0).args[2].otherArgs.headers['x-goog-request-params'],
         expectedHeaderRequestParams
       );
     });

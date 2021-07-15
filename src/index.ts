@@ -19,8 +19,8 @@
 import * as v1 from './v1';
 import * as v1beta1 from './v1beta1';
 
-const TranscoderServiceClient = v1beta1.TranscoderServiceClient;
-type TranscoderServiceClient = v1beta1.TranscoderServiceClient;
+const TranscoderServiceClient = v1.TranscoderServiceClient;
+type TranscoderServiceClient = v1.TranscoderServiceClient;
 
 export {v1, v1beta1, TranscoderServiceClient};
 export default {v1, v1beta1, TranscoderServiceClient};
