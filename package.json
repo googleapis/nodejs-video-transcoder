@@ -1,6 +1,6 @@
 {
   "name": "@google-cloud/video-transcoder",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "description": "Transcoder client for Node.js",
   "repository": "googleapis/nodejs-video-transcoder",
   "license": "Apache-2.0",
@@ -39,7 +39,7 @@
     "test": "c8 mocha build/test"
   },
   "dependencies": {
-    "google-gax": "^2.17.0"
+    "google-gax": "^2.17.1"
   },
   "devDependencies": {
     "@types/mocha": "^8.0.3",
