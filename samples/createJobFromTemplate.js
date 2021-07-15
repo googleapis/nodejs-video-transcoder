@@ -27,7 +27,9 @@ function main(projectId, location, inputUri, outputUri, templateId) {
   // templateId = 'my-job-template';
 
   // Imports the Transcoder library
-  const {TranscoderServiceClient} = require('@google-cloud/video-transcoder');
+  const {
+    TranscoderServiceClient,
+  } = require('@google-cloud/video-transcoder').v1beta1;
 
   // Instantiates a client
   const transcoderServiceClient = new TranscoderServiceClient();
