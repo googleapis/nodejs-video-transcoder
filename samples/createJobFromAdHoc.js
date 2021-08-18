@@ -30,9 +30,7 @@ function main(projectId, location, inputUri, outputUri) {
     require('@google-cloud/video-transcoder').v1;
 
   // Instantiates a client
-  const transcoderServiceClient = new TranscoderServiceClient({
-    version: 'v1',
-  });
+  const transcoderServiceClient = new TranscoderServiceClient();
 
   async function createJobFromAdHoc() {
     // Construct request
