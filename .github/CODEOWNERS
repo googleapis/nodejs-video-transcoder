@@ -11,5 +11,5 @@
 .github/auto-approve.yml                 @googleapis/github-automation
 
 # @Irataxy will own samples
-samples/ @irataxy
+samples/**/*.js @irataxy
 
