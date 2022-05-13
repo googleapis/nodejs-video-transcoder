@@ -4181,56 +4181,56 @@ export namespace google {
                     namespace TranscoderService {
 
                         /**
-                         * Callback as used by {@link google.cloud.video.transcoder.v1.TranscoderService|createJob}.
+                         * Callback as used by {@link google.cloud.video.transcoder.v1.TranscoderService#createJob}.
                          * @param error Error, if any
                          * @param [response] Job
                          */
                         type CreateJobCallback = (error: (Error|null), response?: google.cloud.video.transcoder.v1.Job) => void;
 
                         /**
-                         * Callback as used by {@link google.cloud.video.transcoder.v1.TranscoderService|listJobs}.
+                         * Callback as used by {@link google.cloud.video.transcoder.v1.TranscoderService#listJobs}.
                          * @param error Error, if any
                          * @param [response] ListJobsResponse
                          */
                         type ListJobsCallback = (error: (Error|null), response?: google.cloud.video.transcoder.v1.ListJobsResponse) => void;
 
                         /**
-                         * Callback as used by {@link google.cloud.video.transcoder.v1.TranscoderService|getJob}.
+                         * Callback as used by {@link google.cloud.video.transcoder.v1.TranscoderService#getJob}.
                          * @param error Error, if any
                          * @param [response] Job
                          */
                         type GetJobCallback = (error: (Error|null), response?: google.cloud.video.transcoder.v1.Job) => void;
 
                         /**
-                         * Callback as used by {@link google.cloud.video.transcoder.v1.TranscoderService|deleteJob}.
+                         * Callback as used by {@link google.cloud.video.transcoder.v1.TranscoderService#deleteJob}.
                          * @param error Error, if any
                          * @param [response] Empty
                          */
                         type DeleteJobCallback = (error: (Error|null), response?: google.protobuf.Empty) => void;
 
                         /**
-                         * Callback as used by {@link google.cloud.video.transcoder.v1.TranscoderService|createJobTemplate}.
+                         * Callback as used by {@link google.cloud.video.transcoder.v1.TranscoderService#createJobTemplate}.
                          * @param error Error, if any
                          * @param [response] JobTemplate
                          */
                         type CreateJobTemplateCallback = (error: (Error|null), response?: google.cloud.video.transcoder.v1.JobTemplate) => void;
 
                         /**
-                         * Callback as used by {@link google.cloud.video.transcoder.v1.TranscoderService|listJobTemplates}.
+                         * Callback as used by {@link google.cloud.video.transcoder.v1.TranscoderService#listJobTemplates}.
                          * @param error Error, if any
                          * @param [response] ListJobTemplatesResponse
                          */
                         type ListJobTemplatesCallback = (error: (Error|null), response?: google.cloud.video.transcoder.v1.ListJobTemplatesResponse) => void;
 
                         /**
-                         * Callback as used by {@link google.cloud.video.transcoder.v1.TranscoderService|getJobTemplate}.
+                         * Callback as used by {@link google.cloud.video.transcoder.v1.TranscoderService#getJobTemplate}.
                          * @param error Error, if any
                          * @param [response] JobTemplate
                          */
                         type GetJobTemplateCallback = (error: (Error|null), response?: google.cloud.video.transcoder.v1.JobTemplate) => void;
 
                         /**
-                         * Callback as used by {@link google.cloud.video.transcoder.v1.TranscoderService|deleteJobTemplate}.
+                         * Callback as used by {@link google.cloud.video.transcoder.v1.TranscoderService#deleteJobTemplate}.
                          * @param error Error, if any
                          * @param [response] Empty
                          */
@@ -7690,9 +7690,6 @@ export namespace google {
             /** FieldOptions lazy */
             lazy?: (boolean|null);
 
-            /** FieldOptions unverifiedLazy */
-            unverifiedLazy?: (boolean|null);
-
             /** FieldOptions deprecated */
             deprecated?: (boolean|null);
 
@@ -7729,9 +7726,6 @@ export namespace google {
 
             /** FieldOptions lazy. */
             public lazy: boolean;
-
-            /** FieldOptions unverifiedLazy. */
-            public unverifiedLazy: boolean;
 
             /** FieldOptions deprecated. */
             public deprecated: boolean;
