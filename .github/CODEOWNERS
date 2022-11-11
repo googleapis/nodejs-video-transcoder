@@ -6,10 +6,7 @@
 
 
 # The yoshi-nodejs team is the default owner for nodejs repositories.
-*     @googleapis/yoshi-nodejs 
+*     @googleapis/yoshi-nodejs @googleapis/cloud-media-team
 
-.github/auto-approve.yml                 @googleapis/github-automation
-
-# @Irataxy will own samples
-samples/**/*.js @irataxy
-
+# The github automation team is the default owner for the auto-approve file.
+.github/auto-approve.yml @googleapis/github-automation
