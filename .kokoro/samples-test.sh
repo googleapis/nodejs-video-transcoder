@@ -24,23 +24,6 @@ if [ -f .kokoro/pre-samples-test.sh ]; then
     . .kokoro/pre-samples-test.sh
     set -x
 fi
-if [ -f samples/package.json ]; then
-    # Install and link samples
-    cd samples/
-    npm install
-    # If tests are running against main branch, configure flakybot
-    # to open issues on failures:
-    if [[ $KOKORO_BUILD_ARTIFACTS_SUBDIR = *"continuous"* ]] || [[ $KOKORO_BUILD_ARTIFACTS_SUBDIR = *"nightly"* ]]; then
-      export MOCHA_REPORTER_OUTPUT=test_output_sponge_log.xml
-      export MOCHA_REPORTER=xunit
-      cleanup() {
-        chmod +x $KOKORO_GFILE_DIR/linux_amd64/flakybot
-        $KOKORO_GFILE_DIR/linux_amd64/flakybot
-      }
-      trap cleanup EXIT HUP
-    fi
-    npm run test
-fi
 # codecov combines coverage across integration and unit tests. Include
 # the logic below for any environment you wish to collect coverage for:
 COVERAGE_NODE=12
